@@ -1,0 +1,110 @@
+package com.rx.webApplication.controller;
+
+import com.cxt.wechat.entity.WechatUser;
+import com.cxt.wechat.oauth2.Oauth2;
+import com.google.gson.Gson;
+import com.rx.webApplication.SessionStorage;
+import com.rx.webApplication.dao.Impl.TlkWechatUserEntityDaoImpl;
+import com.rx.webApplication.dao.TlkWechatUserEntityDao;
+import com.rx.webApplication.entities.TlkWechatUserEntity;
+import com.rx.webApplication.entities.bean.AccessTokenEntity;
+import com.rx.webApplication.util.DBFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+/**
+ * Created by 王玉粮 on 2017/6/28.
+ */
+@Controller
+@RequestMapping("oauthWechat")
+public class OauthWechatController {
+    AccessTokenEntity accessTokenEntity = AccessTokenEntity.getAccessTokenEntity();
+    /**
+     * 用户微信登录验证
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    @RequestMapping(path = "authUserLogin")
+    public void authUserLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Oauth2 oauth2 = Oauth2.getOauth2();
+        Gson gson = new Gson();
+        String code = request.getParameter("code");      //获取code
+        String state = request.getParameter("state");   //获取状态
+        Map<String,Object> map = new HashMap<>();
+        HttpSession session = request.getSession();
+        System.out.println("state:"+state);
+        session.setAttribute(SessionStorage.STATE,state);
+       if(code!=null){
+           System.out.println("code:"+code);
+           String accessToken = oauth2.access_token(DBFactory.APPID,DBFactory.SECRITE,code);   //拉取access_token的json
+           if(accessToken!=null){
+               accessTokenEntity  =  gson.fromJson(accessToken,AccessTokenEntity.class);
+               if(accessTokenEntity!=null){
+                   String access_token = accessTokenEntity.getAccess_token();
+                   String refresh_token = accessTokenEntity.getRefresh_token();
+                   String openid = accessTokenEntity.getOpenid();
+                   String errorCode = accessTokenEntity.getErrcode();
+                   if(errorCode!=null||errorCode!=null){
+                       response.sendRedirect("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb5e53b1e6a25c317&redirect_uri=http%3A%2F%2Fwww.chenxuantong.cn%2Frx%2FoauthWechat%2FauthUserLogin&response_type=code&scope=snsapi_userinfo&state="+state+"#wechat_redirect");
+                   }else {
+                       String userInfo = oauth2.userinfo(access_token,openid);
+                       WechatUser wechatUser = gson.fromJson(userInfo,WechatUser.class);
+                       System.out.println("WechatUser:"+new Gson().toJson(wechatUser));
+                       if(wechatUser!=null){
+                           session.setAttribute(SessionStorage.WECHATUSER,wechatUser);
+                           TlkWechatUserEntityDao tlkWechatUserEntityDao = new TlkWechatUserEntityDaoImpl();
+                           TlkWechatUserEntity tlkWechatUserEntity = tlkWechatUserEntityDao.findByOpenid(wechatUser.getOpenid());//通过openid判断
+                           if(tlkWechatUserEntity.getItemOpenid()!=null){
+                               System.out.println("tlkWechatUserEntity:"+tlkWechatUserEntity);
+                               System.out.println(new Gson().toJson(tlkWechatUserEntity));
+                               String khid = tlkWechatUserEntity.getItemKhid();
+                               if(khid!=null){
+                                   session.setAttribute(SessionStorage.KHID,khid);
+                                   if(state!=null){
+                                       if(state == "0" || state.equals("0")){
+                                           request.getRequestDispatcher("/clxx/query").forward(request,response);
+                                       }else if(state == "1" || state.equals("1")){
+                                           request.getRequestDispatcher("/perInf/Info").forward(request,response);
+                                       }else if(state == "2" || state.equals("2")) {
+                                           request.getRequestDispatcher("/khqd/ztqd").forward(request,response);
+                                       }else if(state == "3" || state.equals("3")){
+                                           request.getRequestDispatcher("/cpxx/query").forward(request,response);
+                                       }else {
+                                           request.getRequestDispatcher("/khqd/ztqd").forward(request,response);
+                                       }
+                                   }else {
+                                       System.out.println("未取得状态码！");
+                                   }
+                               }else {
+                                   System.out.println("未取得客户ID");
+                                   request.getRequestDispatcher("/WEB-INF/jsp/newConfirmPgae.jsp").forward(request,response);
+                               }
+                           }else {
+                               System.out.println("保存微信用户！");
+                               tlkWechatUserEntityDao.InsertToWechatUser(UUID.randomUUID().toString(),wechatUser.getOpenid());
+                               request.getRequestDispatcher("/WEB-INF/jsp/newConfirmPgae.jsp").forward(request,response);
+                           }
+                       }
+                   }
+               }else {
+                   System.err.println("未取得accessTokenEntity");
+               }
+           }else {
+               System.err.println("未取得accessToken");
+           }
+       }else {
+           System.err.println("未取得code");
+       }
+    }
+}

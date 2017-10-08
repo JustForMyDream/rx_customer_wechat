@@ -1,0 +1,150 @@
+<!doctype html>
+<html class="no-js">
+
+<head>
+    <meta charset="utf-8">
+    <title>签单详情</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="alternate icon" type="image/png" href="../i/favicon.png">
+    <link rel="stylesheet" href="../css/amazeui.min.css"/>
+    <link rel="stylesheet" href="../css/personalinformation.css">
+    <script src="../js/jquery-3.1.1.min.js"></script>
+    <script src="../js/amazeui.widgets.helper.min.js"></script>
+    <script src="../js/amazeui.min.js"></script>
+    <style type="text/css">
+        hr {
+            margin: 0 0 0 0;
+        }
+        .span-right{
+            float: right;
+        }
+    </style>
+</head>
+
+<body>
+
+<header data-am-widget="header"
+        class="am-header am-header-default" style="text-align: center">
+    <div class="am-header-left am-header-nav">
+        <a href="oldztqd.html" class="">
+            <i class="am-header-icon am-icon-exchange"></i>
+        </a>
+    </div>
+    <p>
+        签单详情
+    </p>
+    <div class="am-header-right am-header-nav">
+        <a href="#right-link" class="">
+            <i class="am-header-icon "></i>
+        </a>
+    </div>
+</header>
+
+<HR style="height: 4px; dashed: #8BC34A" color=#8BC34A SIZE=1>
+
+<div class="am-panel am-panel-default">
+    <div class="am-panel-hd ">
+        <span>基本信息</span>
+    </div>
+    <div class="am-panel-bd">
+        <p data-am-collapse="{parent: '#collapase-nav-1', target: '#user-nav'}">
+            签单号:<span class="span-right">47aada6b7467</span>
+        </p>
+        <p data-am-collapse="{parent: '#collapase-nav-1', target: '#user-nav'}">
+            签单时间：<span class="span-right">2017-06-08</span>
+        </p>
+        <p data-am-collapse="{parent: '#collapase-nav-1', target: '#user-nav'}">
+            意向金额:<span class="span-right">1（万元）</span>
+        </p>
+        <p data-am-collapse="{parent: '#collapase-nav-1', target: '#user-nav'}">
+            贷款类型:<span class="span-right">房贷</span>
+        </p>
+        <p data-am-collapse="{parent: '#collapase-nav-1', target: '#user-nav'}">
+            房贷:<span class="span-right">杨青</span>
+        </p>
+    </div>
+</div>
+<HR style="height: 4px; dashed:#ff9800" color=#ff9800 SIZE=1>
+<div class="am-panel am-panel-default">
+    <div class="am-panel-hd ">
+        <span>签单产品</span>
+    </div>
+    <div class="am-panel-bd">
+        <p>签单名称 ：</p>
+        <p>平安银行-房贷新一贷</p>
+        <p> 分公司：</p>
+        <p>成都分公司</p>
+        <p>产品中心：</p>
+        <p>产品运营中心</p>
+        <p>产品经理：</p>
+        <p>小黄</p><br/>
+    </div>
+</div>
+<HR style="height: 4px; dashed: #259b24" color=#259b24 SIZE=1>
+<div class="am-panel am-panel-default">
+    <div class="am-panel-hd ">
+        <span>签单记录</span>
+    </div>
+    <div class="am-panel-bd">
+        <table class="am-table">
+            <thead>
+            <tr>
+                <th>时间</th>
+                <th>操作步骤</th>
+                <th>操作人</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>2017-06-09</td>
+                <td>过件</td>
+                <td>毛敏</td>
+
+            </tr>
+            <tr>
+                <td>2017-07-01</td>
+                <td>过件</td>
+                <td>张xx</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    $(function() {
+        var $wrapper = $('#js-do-demo');
+        $wrapper.DOMObserve({
+            childList: true,
+            attributes: true,
+            subtree: true
+        }, function(mutations, observer) {
+            console.log(observer.constructor === window.MutationObserver);
+            console.log('#js-do-demo 的 DOM 发生变化鸟：' + mutations[0].type);
+        });
+
+        $('#js-do-actions').find('button').on('click', function(e) {
+            var $t = $(e.target);
+            if ($t.is('[data-insert]')) {
+                $wrapper.append('<p>插入了一个 p</p>');
+            } else if($t.is('[data-remove]')) {
+                $wrapper.find('p').last().remove();
+            } else {
+                $wrapper.addClass('am-text-danger');
+            }
+        });
+    })
+</script>
+
+<script src="../js/jquery-3.1.1.min.js"></script>
+
+<script src="../js/amazeui.min.js"></script>
+</body>
+
+</html>

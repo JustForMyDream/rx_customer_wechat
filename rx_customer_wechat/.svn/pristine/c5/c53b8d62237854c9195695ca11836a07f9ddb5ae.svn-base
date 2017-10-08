@@ -1,0 +1,214 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Dell
+  Date: 2017/7/26
+  Time: 19:51
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.rx.webApplication.SessionStorage" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>资产信息-房产信息</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="alternate icon" type="image/png" href="../i/favicon.png">
+    <%@include file="../../page/jsAndCss.jsp" %>
+    <link rel="stylesheet" href="../css/zichanxinxi.css"/>
+    <link rel="stylesheet" href="../css/loader.css"/>
+</head>
+<style>
+
+    .loader{
+        display:none;
+    }
+</style>
+<body>
+<header data-am-widget="header" class="am-header">
+    <div class="am-header-left am-header-nav">
+        <a href="#left-link" class="" onclick="goBack()">
+            <img src="../img/left.png" class="left">
+            <span style="margin-left: 2px">返回</span>
+        </a>
+    </div>
+    <p>
+        资产信息
+    </p>
+    <div class="am-header-right am-header-nav">
+    </div>
+</header>
+<div class="content">
+    <ul class="am-list admin-sidebar-list" id="collapase-nav-1">
+        <li class="am-panel content-zzxx">
+            <p style="background-color: rgb(242,242,242)!important; font-weight: 200!important;text-align: center;font-family:PingFangSC-Medium;
+                        font-size:18px;
+                        color:#000000;
+                        text-align:center;">
+                房产信息
+            </p>
+        </li>
+        <li class="am-panel">
+            <p>
+                房产性质：
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+                <select id="sfcxz">
+                    <option value="全款">全款</option>
+                    <option value="按揭">按揭</option>
+                </select>
+            </p>
+
+        </li>
+
+        <li class="am-panel">
+            <p>
+                房屋类型：
+                <select id="sfwlx">
+                    <option value="商品房">商品房</option>
+                    <option value="拆迁安置房">拆迁安置房</option>
+                    <option value="单位房">单位房</option>
+                    <option value="自建房">自建房</option>
+                    <option value="商铺房">商铺房</option>
+                </select>
+
+
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+            </p>
+        </li>
+
+        <li class="am-panel">
+            <p>
+                双证是否齐全：
+                <select id="sszsfqq">
+                    <option value="有">有</option>
+                    <option value="无">无</option>
+                </select>
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+            </p>
+        </li>
+        <li class="am-panel">
+            <p>
+                月供金额(元)：<input id="ygje" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                               onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"/>
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+            </p>
+        </li>
+        <li class="am-panel">
+            <p>
+                总面积(平米):<input id="szmj" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                               onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"/>
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+            </p>
+        </li>
+        <li class="am-panel">
+            <p>
+                市场单价：<input id="scsdj" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                            onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"/>
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+            </p>
+        </li>
+        <li class="am-panel">
+            <p>
+                购房时间：<input type="date" class="time" id="sgfsj" style="padding-top: 11px"/>
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+            </p>
+        </li>
+        <li class="am-panel">
+            <p>
+                房产地址：<input  id="sfcdz"/>
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+            </p>
+        </li>
+    </ul>
+
+    <div class="baocun">
+        <button type="button" id="fcxxbc">保存</button>
+        <div id="message"></div>
+    </div>
+</div>
+<div class="loader">
+    <div class="loader-inner">
+        <div class="loader-line-wrap">
+            <div class="loader-line"></div>
+        </div>
+        <div class="loader-line-wrap">
+            <div class="loader-line"></div>
+        </div>
+        <div class="loader-line-wrap">
+            <div class="loader-line"></div>
+        </div>
+        <div class="loader-line-wrap">
+            <div class="loader-line"></div>
+        </div>
+        <div class="loader-line-wrap">
+            <div class="loader-line"></div>
+        </div>
+    </div>
+</div>
+<script>
+    var khid = "<%=session.getAttribute(SessionStorage.KHID)%>";
+//    var khid = "11e7-6db8-e83c5ebe-8d42-4f6fa9b0ec38";
+    function goBack(){
+        history.go(-1);//后退一页
+    }
+    <%--var khid = "<%=session.getAttribute(SessionStorage.KHID)%>";--%>
+    $('#fcxxbc').on('click', function () {
+        var sfcxz = $("#sfcxz").find("option:selected").val();
+        var sfwlx = $("#sfwlx").find("option:selected").val();
+        var sszsfqq = $("#sszsfqq").find("option:selected").val();
+        var ygje = document.getElementById("ygje").value;
+        var szmj = document.getElementById("szmj").value;
+        var scsdj = document.getElementById("scsdj").value;
+        var sgfsj = document.getElementById("sgfsj").value;
+        var sfcdz = document.getElementById("sfcdz").value;
+        if (sfcxz == "" || sfwlx == "" || sszsfqq == "" || ygje == "" || szmj == "" || scsdj == "" || sgfsj == ""||sfcdz=="") {
+            alert("请完善信息!");
+        }
+        else {
+            $(".loader").css("display","block");
+            $.ajax({
+                url: "/rx/clxx/savehouse",
+                data: {
+                    "ITEM_FCXZ": sfcxz,
+                    "ITEM_JZLX": sfwlx,
+                    "ITEM_SZSFQQ": sszsfqq,
+                    "ITEM_GFSJ": sgfsj,
+                    "ITEM_JZMJ": szmj,
+                    "ITEM_YGJE": ygje,
+                    "ITEM_SCDJ": scsdj,
+                    "ITEM_FCDZ":sfcdz,
+                    "ITEM_KHID": khid
+                },
+                type: "post",
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 200) {
+                        setTimeout("disappearLoad()",1000);
+                        $("#message").html("保存成功!").show(300).delay(2000).hide(300);
+                        setTimeout("window.location.href = '../clxx/query'",3000);
+
+                    } else {
+                        $(".loader").css("display","none");
+                        $("#message").html("保存失败!").show(300).delay(2000).hide(300);
+
+                    }
+
+                },
+                error: function () {
+                    $(".loader").css("display","none");
+                }
+            })
+        }
+    });
+    function disappearLoad() {
+        $(".loader").css("display","none");
+    }
+
+</script>
+</body>
+</html>

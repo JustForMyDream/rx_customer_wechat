@@ -1,0 +1,57 @@
+<%@ page import="java.util.ResourceBundle" %><%--
+  Created by IntelliJ IDEA.
+  User: Ace
+  Date: 2017/7/15
+  Time: 11:08
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%ResourceBundle res = ResourceBundle.getBundle("webJump"); %>
+<html>
+<head>
+    <title>正在加载</title>
+    <%@include file="../../page/jsAndCss.jsp"%>
+    <link rel="stylesheet" href="../css/loader.css"/>
+</head>
+<body>
+<div class="loader">
+    <div class="loader-inner">
+        <div class="loader-line-wrap">
+            <div class="loader-line"></div>
+        </div>
+        <div class="loader-line-wrap">
+            <div class="loader-line"></div>
+        </div>
+        <div class="loader-line-wrap">
+            <div class="loader-line"></div>
+        </div>
+        <div class="loader-line-wrap">
+            <div class="loader-line"></div>
+        </div>
+        <div class="loader-line-wrap">
+            <div class="loader-line"></div>
+        </div>
+    </div>
+    <script>
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg); //匹配目标参数
+            if (r != null) return unescape(r[2]); return null; //返回参数值
+        }
+        $.ajax({
+            type: "GET",
+            async:true,
+            url: "../entwec/judge",
+            data: {code:getUrlParam("code")},
+            success: function(data){
+                if(data!='phone') {
+                    var href = "../entwec/" + data;
+                    window.location.href = href;
+                }else
+                    window.location.href = "<%=res.getString("rxPhone")%>";
+            }
+        });
+    </script>
+</div>
+</body>
+</html>

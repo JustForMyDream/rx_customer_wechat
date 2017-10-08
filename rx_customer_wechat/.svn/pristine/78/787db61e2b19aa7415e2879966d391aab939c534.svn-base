@@ -1,0 +1,262 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Dell
+  Date: 2017/7/26
+  Time: 17:03
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.rx.webApplication.SessionStorage" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>融祥金融</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="alternate icon" type="image/png" href="../i/favicon.png">
+    <%@include file="../../page/jsAndCss.jsp"%>
+    <link rel="stylesheet" href="../css/zichanxinxi.css"/>
+    <link rel="stylesheet" href="../css/loader.css"/>
+</head>
+<style>
+    .loader{
+        display:none;
+    }
+
+</style>
+<body>
+<header data-am-widget="header" class="am-header">
+    <div class="am-header-left am-header-nav">
+        <a href="#left-link" class="" onclick="goBack()">
+            <img src="../img/leftjt.png" class="left"><span>返回</span>
+        </a>
+    </div>
+    <p>
+
+        公司信息
+    </p>
+    <div class="am-header-right am-header-nav">
+        <!--<a href="#right-link" class="">-->
+        <!--<i class="am-header-icon am-icon-save"></i>-->
+        <!--</a>-->
+    </div>
+</header>
+<div class="content">
+    <ul class="am-list admin-sidebar-list" id="collapase-nav-1">
+        <li class="am-panel content-zzxx" >
+            <p data-am-collapse="{parent: '#collapase-nav-1', target: '#user-nav'}"
+               style="background-color: rgb(242,242,242)!important; font-weight: 200!important;text-align: center;font-family:PingFangSC-Medium;
+                        font-size:18px;
+                        color:#000000;
+                        text-align:center;">
+                公司信息
+            </p>
+        </li>
+        <li class="am-panel">
+            <p>
+                单位名称：<input id="gsdwmc" />
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+
+            </p>
+
+        </li>
+        <li class="am-panel">
+            <p>
+                经营场所：<input id="jycs"/>
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+            </p>
+
+        </li>
+
+        <li class="am-panel">
+            <p>
+                单位地址：<input id="dwdz"/>
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+            </p>
+        </li>
+
+        <li class="am-panel">
+            <p>
+                年营业额(万元)：<input id="nyye" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" />
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+            </p>
+        </li>
+        <li class="am-panel">
+            <p>
+                单位性质：
+                <select id="dwxz">
+                    <option value="国有">国有</option>
+                    <option value="民营">民营</option>
+                    <option value="个体">个体</option>
+                    <option value="其他">其他</option>
+                </select>
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+            </p>
+        </li>
+        <li class="am-panel">
+            <p>
+                单位电话：<input id="dwdh"/>
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+            </p>
+        </li>
+        <li class="am-panel">
+            <p>
+                经营模式：<input id="jyms" />
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+            </p>
+        </li>
+        <li class="am-panel">
+            <p>
+                应收账款(万元)：<input id="yszk" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" />
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+            </p>
+        </li>
+        <li class="am-panel">
+            <p>
+                成立时间：<input  type="date" class="time" id="clsj" style="padding-top: 11px"/>
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+            </p>
+        </li>
+        <li class="am-panel">
+            <p>
+                职位：
+                <select id="zw">
+                    <option value="法人">法人</option>
+                    <option value="股东">股东</option>
+                    <option value="其他">其他</option>
+                </select>
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+            </p>
+        </li>
+        <li class="am-panel">
+            <p>
+                负债情况(万元)：<input id="fzqk" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"/>
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+            </p>
+        </li>
+        <li class="am-panel">
+            <p>
+                存货价值(万元)：<input id="chjz" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"/>
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+            </p>
+        </li>
+        <li class="am-panel">
+            <p>
+                有无营业执照：
+                <select id="ywyyzz">
+                    <option value="有">有</option>
+                    <option value="无">无</option>
+                </select>
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+            </p>
+        </li>
+    </ul>
+
+    <div class="baocun">
+        <button type="button" id="gsxxbc" >保存</button>
+        <div id="message"></div>
+    </div>
+</div>
+<div class="loader">
+    <div class="loader-inner">
+        <div class="loader-line-wrap">
+            <div class="loader-line"></div>
+        </div>
+        <div class="loader-line-wrap">
+            <div class="loader-line"></div>
+        </div>
+        <div class="loader-line-wrap">
+            <div class="loader-line"></div>
+        </div>
+        <div class="loader-line-wrap">
+            <div class="loader-line"></div>
+        </div>
+        <div class="loader-line-wrap">
+            <div class="loader-line"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+//    var khid="11e7-6db8-e83c5ebe-8d42-4f6fa9b0ec38";
+    var khid = "<%=session.getAttribute(SessionStorage.KHID)%>";
+function goBack(){
+    history.go(-1);//后退一页
+}
+    $('#gsxxbc').on('click', function () {
+                var dwxz = $("#dwxz").find("option:selected").val();
+                var zw = $("#zw").find("option:selected").val();
+                 var ywyyzz =  $("#ywyyzz").find("option:selected").val();
+                var gsdwmc  = document.getElementById("gsdwmc").value;
+                var dwdz  = document.getElementById("dwdz").value;
+                var jycs  = document.getElementById("jycs").value;
+                var nyye  = document.getElementById("nyye").value;
+                var dwdh  = document.getElementById("dwdh").value;
+                var jyms  = document.getElementById("jyms").value;
+                var yszk  = document.getElementById("yszk").value;
+                var clsj  = document.getElementById("clsj").value;
+                var fzqk  = document.getElementById("fzqk").value;
+                var chjz = document.getElementById("chjz").value;
+console.log(ywyyzz);
+                if(dwxz==""||zw==""||gsdwmc==""||dwdz==""||jycs==""||nyye==""||dwdh==""
+                        ||jyms==""||yszk==""||clsj==""||fzqk==""||chjz==""||ywyyzz==""){
+                    alert("请完善信息!");
+                }
+                else {
+                    $(".loader").css("display","block");
+                    $.ajax({
+                        url: "/rx/clxx/savegsxx",
+                        data: {
+                            "ITEM_DWMC": gsdwmc,
+                            "ITEM_DWDZ": dwdz,
+                            "ITEM_JYCS": jycs,
+                            "ITEM_DWXZ": dwxz,
+                            "ITEM_ZW": zw,
+                            "ITEM_NYYE": nyye,
+                            "ITEM_DWDH": dwdh,
+                            "ITEM_JYMS": jyms,
+                            "ITEM_YSZK": yszk,
+                            "ITEM_CLSJ": clsj,
+                            "ITEM_FZQK": fzqk,
+                            "ITEM_CHJZ": chjz,
+                            "ITEM_YWYYZZ":ywyyzz,
+                            "ITEM_KHID": khid
+                        },
+                        type: "post",
+                        dataType: "json",
+                        success: function (data) {
+                            console.log(data);
+                            if (data.code == 200) {
+                                setTimeout("disappearLoad()",1000);
+                                $("#message").html("保存成功!").show(300).delay(2000).hide(300);
+                                setTimeout("window.location.href = '../clxx/query'",3000);
+
+
+                            } else {
+                                $(".loader").css("display","none");
+                                $("#message").html("保存失败!").show(300).delay(2000).hide(300);
+
+                            }
+                        },
+                        error: function () {
+                            $(".loader").css("display","none");
+                        }
+                    })
+                }
+
+    });
+function disappearLoad() {
+    $(".loader").css("display","none");
+}
+
+</script>

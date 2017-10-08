@@ -1,0 +1,449 @@
+package com.rx.webApplication.controller;
+
+import com.cxt.wechat.Template.TemplateMessageBussiness;
+import com.cxt.wechat.Template.TemplateMessageBussinessImpl;
+import com.cxt.wechat.entity.WechatTemplate.WechatTemplateItem;
+import com.cxt.wechat.entity.WechatTemplate.WechatTemplateMessage;
+import com.cxt.wechat.token.Token;
+import com.google.gson.Gson;
+import com.rx.webApplication.dao.Impl.TlkAccesstokenEntityDaoImpl;
+import com.rx.webApplication.dao.TlkAccesstokenEntityDao;
+import com.rx.webApplication.entities.TlkAccesstokenEntity;
+import com.rx.webApplication.entities.bean.PlatformAccessTokenEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Created by 王玉粮 on 2017/7/15.
+ */
+@Controller
+@RequestMapping("wechatTemplate")
+public class WechatSendTemplateController {
+    TemplateMessageBussiness templateMessageBussiness = new TemplateMessageBussinessImpl();
+
+    TlkAccesstokenEntityDao tlkAccesstokenEntityDao = new TlkAccesstokenEntityDaoImpl();
+
+    /**
+     * 发送订单完成通知.
+     * @param request
+     * @param response
+     */
+    @RequestMapping("finishOrder")
+    public void sendfinishOrder(HttpServletRequest request, HttpServletResponse response){
+        System.out.println("接受微信发送事件！");
+        String openid = request.getParameter("openid");
+        String ddh = request.getParameter("ddh");
+        String state = request.getParameter("state");
+        System.out.println("openid:"+openid+"  ddh:"+ddh+"  state:"+state);
+        if(openid!=null&&ddh!=null&&state!=null){
+            sendFinishOrderMessage(openid,ddh,state);
+        }else {
+            System.out.println("未取得完整参数！");
+        }
+    }
+
+    /**
+     * 做单进度通知
+     * @param request
+     * @param response
+     */
+    @RequestMapping("singleStep")
+    public void sendSingleStep(HttpServletRequest request,HttpServletResponse response){
+        String openid = request.getParameter("openid");
+        String qdh = request.getParameter("qdh");
+        String cpmc = request.getParameter("cpmc");
+        String time = request.getParameter("time");
+        String zdbz = request.getParameter("zdbz");
+        String url = request.getParameter("url");
+        System.out.println("openid:"+openid+"qdh:"+qdh+"cpmc:"+cpmc+"time:"+time+"zdbz:"+zdbz);
+        if(openid!=null&&qdh!=null&&cpmc!=null&&time!=null&&zdbz!=null){
+            if(url != null){
+                sendDoSingleStepMessage(openid,qdh,cpmc,time,zdbz,url);
+            }else {
+                sendDoSingleStepMessage(openid,qdh,cpmc,time,zdbz);
+            }
+        }else {
+            System.out.println("未取得完整参数！");
+        }
+    }
+
+    /**
+     *资料补全通知
+     * @param request
+     * @param response
+     */
+    @RequestMapping("CompleteData")
+    public void sendCompleteData(HttpServletRequest request,HttpServletResponse response){
+        String openid = request.getParameter("openid");
+        String qdh = request.getParameter("qdh");
+        String cpmc = request.getParameter("cpmc");
+        String card = request.getParameter("card");
+        String url = request.getParameter("url");
+        if(openid!=null&&qdh!=null&&cpmc!=null&&card!=null){
+            if(url!=null){
+                sendCompleteDataMessage(openid,qdh,cpmc,card,url);
+            }else {
+                sendCompleteDataMessage(openid,qdh,cpmc,card);
+            }
+        }else {
+            System.out.println("未取得完整参数！");
+        }
+    }
+
+    /**
+     * 放款金额通知
+     * @param request
+     * @param response
+     */
+    @RequestMapping("Loan")
+    public void sendLoan(HttpServletRequest request,HttpServletResponse response){
+        String openid = request.getParameter("openid");
+        String qdh = request.getParameter("qdh");
+        String cpmc = request.getParameter("cpmc");
+        String time = request.getParameter("time");
+        String fkje = request.getParameter("fkje");
+        String url = request.getParameter("url");
+        if(openid!=null&&qdh!=null&&cpmc!=null&&time!=null&&fkje!=null){
+            if(url != null){
+                sendLoanMessage(openid,qdh,cpmc,time,fkje,url);
+            }else {
+                sendLoanMessage(openid,qdh,cpmc,time,fkje);
+            }
+        }else {
+            System.out.println("未取得完整参数！");
+        }
+    }
+
+    /**
+     * 还款提醒
+     * @param request
+     * @param response
+     */
+    @RequestMapping("repayment")
+    public void sendRepayment(HttpServletRequest request,HttpServletResponse response){
+        String openid = request.getParameter("openid");
+        String qdh = request.getParameter("qdh");
+        String cpmc = request.getParameter("cpmc");
+        String time = request.getParameter("time");
+        String hkje = request.getParameter("hkje");
+        String url = request.getParameter("url");
+        if(openid!=null&&qdh!=null&&cpmc!=null&&time!=null&&hkje!=null){
+            if(url!=null){
+                repaymentMessage(openid,qdh,cpmc,time,hkje,url);
+            }else {
+                repaymentMessage(openid,qdh,cpmc,time,hkje);
+            }
+        }else {
+            System.out.println("未取得完整参数！");
+        }
+    }
+
+    /**
+     * 催款提醒
+     * @param request
+     * @param response
+     */
+    @RequestMapping("pressfor")
+    public void sendpressFor(HttpServletRequest request,HttpServletResponse response){
+        String openid = request.getParameter("openid");
+        String qdh = request.getParameter("qdh");
+        String cpmc = request.getParameter("cpmc");
+        String url = request.getParameter("url");
+        if(openid!=null&&qdh!=null&&cpmc!=null){
+            if(url != null){
+                pressForMessage(openid,qdh,cpmc,url);
+            }else {
+                pressForMessage(openid,qdh,cpmc);
+            }
+        }else {
+            System.out.println("未取得完整参数！");
+        }
+    }
+
+    /**
+     * 发送订单完成通知。
+     * @param openid
+     * @param ddh
+     * @param state
+     */
+    public void sendFinishOrderMessage(String openid,String ddh,String state){
+        TlkAccesstokenEntity tlkAccesstokenEntity=  tlkAccesstokenEntityDao.findTlkAccesstokenEntityByLastTime();
+        System.out.println("进入发送模板的函数");
+        String templateId = "CgBcVTYqs_sOCVLo06___aYt-Lsa0vEEoK-6r6wX8Ok";//模板id
+        WechatTemplateMessage wechatTemplateMessage = new WechatTemplateMessage();
+        wechatTemplateMessage.setTemplate_id(templateId);
+        Map<String,WechatTemplateItem> data = new HashMap<>();
+        data.put("first",new WechatTemplateItem("尊敬的用户您好，您的订单已完成。"));
+        data.put("keyword1",new WechatTemplateItem(ddh));
+        data.put("keyword2",new WechatTemplateItem(state));
+        data.put("remark",new WechatTemplateItem("感谢你的使用!"));
+        wechatTemplateMessage.setData(data);
+        wechatTemplateMessage.setTouser(openid);
+        System.out.println("wechatTemplateMessage:"+new Gson().toJson(wechatTemplateMessage));
+        System.out.println("tlkAccesstokenEntity："+tlkAccesstokenEntity.getItem_access_token());
+        String reslut =  templateMessageBussiness.send(wechatTemplateMessage,tlkAccesstokenEntity.getItem_access_token());
+        System.out.println(new Gson().toJson(reslut));
+    }
+
+    /**
+     * 做单进度通知
+     * @param openid
+     * @param qdh
+     * @param cpmc
+     * @param time
+     * @param zdbz
+     */
+    public void sendDoSingleStepMessage(String openid,String qdh,String cpmc,String time,String zdbz){
+        TlkAccesstokenEntity tlkAccesstokenEntity=  tlkAccesstokenEntityDao.findTlkAccesstokenEntityByLastTime();
+        String templateId = "EkABTkAjIIACPFCgntpGrl1zYkAW-MPvXAAcdvIPbA4";//模板id
+        WechatTemplateMessage wechatTemplateMessage = new WechatTemplateMessage();
+        wechatTemplateMessage.setTemplate_id(templateId);
+        Map<String,WechatTemplateItem> data = new HashMap<>();
+        data.put("first",new WechatTemplateItem("尊敬的用户您好，您的做单步骤有了新通知！"));
+        data.put("keyword1",new WechatTemplateItem(qdh,"#173177"));
+        data.put("keyword2",new WechatTemplateItem(cpmc,"#173177"));
+        data.put("keyword3",new WechatTemplateItem(time,"#173177"));
+        data.put("keyword4",new WechatTemplateItem(zdbz,"#173177"));
+        data.put("remark",new WechatTemplateItem("融祥普惠！"));
+        wechatTemplateMessage.setData(data);
+        wechatTemplateMessage.setTouser(openid);
+        templateMessageBussiness.send(wechatTemplateMessage,tlkAccesstokenEntity.getItem_access_token());
+    }
+
+    /**
+     * 做单进度通知  带url
+     * @param openid
+     * @param qdh
+     * @param cpmc
+     * @param time
+     * @param zdbz
+     * @param url
+     */
+    public void sendDoSingleStepMessage(String openid,String qdh,String cpmc,String time,String zdbz,String url){
+        TlkAccesstokenEntity tlkAccesstokenEntity=  tlkAccesstokenEntityDao.findTlkAccesstokenEntityByLastTime();
+        String templateId = "EkABTkAjIIACPFCgntpGrl1zYkAW-MPvXAAcdvIPbA4";//模板id
+        WechatTemplateMessage wechatTemplateMessage = new WechatTemplateMessage();
+        wechatTemplateMessage.setTemplate_id(templateId);
+        Map<String,WechatTemplateItem> data = new HashMap<>();
+        data.put("first",new WechatTemplateItem("尊敬的用户您好，您的做单步骤有了新通知！"));
+        data.put("keyword1",new WechatTemplateItem(qdh,"#173177"));
+        data.put("keyword2",new WechatTemplateItem(cpmc,"#173177"));
+        data.put("keyword3",new WechatTemplateItem(time,"#173177"));
+        data.put("keyword4",new WechatTemplateItem(zdbz,"#173177"));
+        data.put("remark",new WechatTemplateItem("融祥普惠！"));
+        wechatTemplateMessage.setData(data);
+        wechatTemplateMessage.setTouser(openid);
+        wechatTemplateMessage.setUrl(url);
+        templateMessageBussiness.send(wechatTemplateMessage,tlkAccesstokenEntity.getItem_access_token());
+    }
+
+
+    /**
+     * 资料补全通知
+     * @param openid
+     * @param qdh
+     * @param cpmc
+     * @param card
+     */
+    public void sendCompleteDataMessage(String openid,String qdh,String cpmc,String card){
+        TlkAccesstokenEntity tlkAccesstokenEntity=  tlkAccesstokenEntityDao.findTlkAccesstokenEntityByLastTime();
+        String templateId = "GDLpVaM1ik0JJVDh4QrlRpREhtvfPomEqSE5gcMaNa0";//模板id
+        WechatTemplateMessage wechatTemplateMessage = new WechatTemplateMessage();
+        wechatTemplateMessage.setTemplate_id(templateId);
+        Map<String,WechatTemplateItem> data = new HashMap<>();
+        data.put("first",new WechatTemplateItem("尊敬的用户您好，您的签单有资料需要补全！"));
+        data.put("keyword1",new WechatTemplateItem(qdh,"#173177"));
+        data.put("keyword2",new WechatTemplateItem(cpmc,"#173177"));
+        data.put("keyword3",new WechatTemplateItem(card,"#173177"));
+        data.put("remark",new WechatTemplateItem("融祥普惠！"));
+        wechatTemplateMessage.setData(data);
+        wechatTemplateMessage.setTouser(openid);
+        templateMessageBussiness.send(wechatTemplateMessage,tlkAccesstokenEntity.getItem_access_token());
+    }
+
+
+    /**
+     * 资料补全通知 url
+     * @param openid
+     * @param qdh
+     * @param cpmc
+     * @param card
+     * @param url
+     */
+    public void sendCompleteDataMessage(String openid,String qdh,String cpmc,String card,String url){
+        TlkAccesstokenEntity tlkAccesstokenEntity=  tlkAccesstokenEntityDao.findTlkAccesstokenEntityByLastTime();
+        String templateId = "GDLpVaM1ik0JJVDh4QrlRpREhtvfPomEqSE5gcMaNa0";//模板id
+        WechatTemplateMessage wechatTemplateMessage = new WechatTemplateMessage();
+        wechatTemplateMessage.setTemplate_id(templateId);
+        Map<String,WechatTemplateItem> data = new HashMap<>();
+        data.put("first",new WechatTemplateItem("尊敬的用户您好，您的签单有资料需要补全！"));
+        data.put("keyword1",new WechatTemplateItem(qdh,"#173177"));
+        data.put("keyword2",new WechatTemplateItem(cpmc,"#173177"));
+        data.put("keyword3",new WechatTemplateItem(card,"#173177"));
+        data.put("remark",new WechatTemplateItem("融祥普惠！"));
+        wechatTemplateMessage.setData(data);
+        wechatTemplateMessage.setTouser(openid);
+        wechatTemplateMessage.setUrl(url);
+        templateMessageBussiness.send(wechatTemplateMessage,tlkAccesstokenEntity.getItem_access_token());
+    }
+
+    /**
+     * 放款金额通知
+     * @param openid
+     * @param qdh
+     * @param cpmc
+     * @param time
+     * @param fkje
+     */
+    public void sendLoanMessage(String openid,String qdh,String cpmc,String time,String fkje){
+        System.out.println("进入发送模板放款结果");
+        TlkAccesstokenEntity tlkAccesstokenEntity=  tlkAccesstokenEntityDao.findTlkAccesstokenEntityByLastTime();
+        String templateId = "ZHI02ykNJ0Bcwb3sg4aBQmTER2Et5UJyjUxC2cngkqY";//模板id
+        WechatTemplateMessage wechatTemplateMessage = new WechatTemplateMessage();
+        wechatTemplateMessage.setTemplate_id(templateId);
+        Map<String,WechatTemplateItem> data = new HashMap<>();
+        data.put("first",new WechatTemplateItem("尊敬的用户您好，您放款有了新通知！"));
+        data.put("keyword1",new WechatTemplateItem(qdh));
+        data.put("keyword2",new WechatTemplateItem(cpmc));
+        data.put("keyword3",new WechatTemplateItem(time));
+        data.put("keyword4",new WechatTemplateItem(fkje));
+        data.put("remark",new WechatTemplateItem("融祥普惠！"));
+        wechatTemplateMessage.setData(data);
+        wechatTemplateMessage.setTouser(openid);
+        templateMessageBussiness.send(wechatTemplateMessage,tlkAccesstokenEntity.getItem_access_token());
+    }
+
+    /**
+     * 放款金额通知 url
+     * @param openid
+     * @param qdh
+     * @param cpmc
+     * @param time
+     * @param fkje
+     * @param url
+     */
+    public void sendLoanMessage(String openid,String qdh,String cpmc,String time,String fkje,String url){
+        System.out.println("进入发送模板放款结果");
+        TlkAccesstokenEntity tlkAccesstokenEntity=  tlkAccesstokenEntityDao.findTlkAccesstokenEntityByLastTime();
+        String templateId = "ZHI02ykNJ0Bcwb3sg4aBQmTER2Et5UJyjUxC2cngkqY";//模板id
+        WechatTemplateMessage wechatTemplateMessage = new WechatTemplateMessage();
+        wechatTemplateMessage.setTemplate_id(templateId);
+        Map<String,WechatTemplateItem> data = new HashMap<>();
+        data.put("first",new WechatTemplateItem("尊敬的用户您好，您放款有了新通知！"));
+        data.put("keyword1",new WechatTemplateItem(qdh));
+        data.put("keyword2",new WechatTemplateItem(cpmc));
+        data.put("keyword3",new WechatTemplateItem(time));
+        data.put("keyword4",new WechatTemplateItem(fkje));
+        data.put("remark",new WechatTemplateItem("融祥普惠！"));
+        wechatTemplateMessage.setData(data);
+        wechatTemplateMessage.setTouser(openid);
+        wechatTemplateMessage.setUrl(url);
+        templateMessageBussiness.send(wechatTemplateMessage,tlkAccesstokenEntity.getItem_access_token());
+    }
+
+    /**
+     * 还款提醒
+     * @param openid
+     * @param qdh
+     * @param cpmc
+     * @param time
+     * @param hkje
+     */
+    public void repaymentMessage(String openid,String qdh,String cpmc,String time,String hkje){
+        System.out.println("-----进入发送模板还款提醒-----");
+        TlkAccesstokenEntity tlkAccesstokenEntity=  tlkAccesstokenEntityDao.findTlkAccesstokenEntityByLastTime();
+        String templateId = "myFzXkHNV7GWyYzCwtejBaWPn36J0zqCAex0UCp7g80";
+        WechatTemplateMessage wechatTemplateMessage = new WechatTemplateMessage();
+        wechatTemplateMessage.setTemplate_id(templateId);
+        Map<String,WechatTemplateItem> data = new HashMap<>();
+        data.put("first",new WechatTemplateItem("尊敬的用户您好，你有一笔待还金额！"));
+        data.put("keyword1",new WechatTemplateItem(qdh));
+        data.put("keyword2",new WechatTemplateItem(cpmc));
+        data.put("keyword3",new WechatTemplateItem(time));
+        data.put("keyword4",new WechatTemplateItem(hkje));
+        data.put("remark",new WechatTemplateItem("融祥普惠！"));
+        wechatTemplateMessage.setData(data);
+        wechatTemplateMessage.setTouser(openid);
+        templateMessageBussiness.send(wechatTemplateMessage,tlkAccesstokenEntity.getItem_access_token());
+    }
+
+    /**
+     * 还款提醒 url
+     * @param openid
+     * @param qdh
+     * @param cpmc
+     * @param time
+     * @param hkje
+     * @param url
+     */
+    public void repaymentMessage(String openid,String qdh,String cpmc,String time,String hkje,String url){
+        System.out.println("-----进入发送模板还款提醒-----");
+        TlkAccesstokenEntity tlkAccesstokenEntity=  tlkAccesstokenEntityDao.findTlkAccesstokenEntityByLastTime();
+        String templateId = "myFzXkHNV7GWyYzCwtejBaWPn36J0zqCAex0UCp7g80";
+        WechatTemplateMessage wechatTemplateMessage = new WechatTemplateMessage();
+        wechatTemplateMessage.setTemplate_id(templateId);
+        Map<String,WechatTemplateItem> data = new HashMap<>();
+        data.put("first",new WechatTemplateItem("尊敬的用户您好，你有一笔待还金额！"));
+        data.put("keyword1",new WechatTemplateItem(qdh));
+        data.put("keyword2",new WechatTemplateItem(cpmc));
+        data.put("keyword3",new WechatTemplateItem(time));
+        data.put("keyword4",new WechatTemplateItem(hkje));
+        data.put("remark",new WechatTemplateItem("融祥普惠！"));
+        wechatTemplateMessage.setData(data);
+        wechatTemplateMessage.setTouser(openid);
+        wechatTemplateMessage.setUrl(url);
+        templateMessageBussiness.send(wechatTemplateMessage,tlkAccesstokenEntity.getItem_access_token());
+    }
+    /**
+     * 催款提醒
+     * @param openid
+     * @param qdh
+     * @param cpmc
+     */
+    public void pressForMessage(String openid,String qdh,String cpmc){
+        System.out.println("-----进入发送模板催款提醒-----");
+        TlkAccesstokenEntity tlkAccesstokenEntity=  tlkAccesstokenEntityDao.findTlkAccesstokenEntityByLastTime();
+        String templateId = "RlSc6MbgH2qCf4xuiLzD7YK0iVF2ThwW_WN54YZ8EQM";
+        WechatTemplateMessage wechatTemplateMessage = new WechatTemplateMessage();
+        wechatTemplateMessage.setTemplate_id(templateId);
+        Map<String,WechatTemplateItem> data = new HashMap<>();
+        data.put("first",new WechatTemplateItem("尊敬的用户您好，你有一笔待还金额！"));
+        data.put("keyword1",new WechatTemplateItem(qdh));
+        data.put("keyword2",new WechatTemplateItem(cpmc));
+        data.put("keyword3",new WechatTemplateItem("为了避免产生高额罚金和高额催收费，请及时还款！"));
+        data.put("remark",new WechatTemplateItem("融祥普惠！"));
+        wechatTemplateMessage.setData(data);
+        wechatTemplateMessage.setTouser(openid);
+        templateMessageBussiness.send(wechatTemplateMessage,tlkAccesstokenEntity.getItem_access_token());
+    }
+
+    /**
+     * 催款提醒 url
+     * @param openid
+     * @param qdh
+     * @param cpmc
+     * @param url
+     */
+    public void pressForMessage(String openid,String qdh,String cpmc,String url){
+        System.out.println("-----进入发送模板催款提醒-----");
+        TlkAccesstokenEntity tlkAccesstokenEntity=  tlkAccesstokenEntityDao.findTlkAccesstokenEntityByLastTime();
+        String templateId = "RlSc6MbgH2qCf4xuiLzD7YK0iVF2ThwW_WN54YZ8EQM";
+        WechatTemplateMessage wechatTemplateMessage = new WechatTemplateMessage();
+        wechatTemplateMessage.setTemplate_id(templateId);
+        Map<String,WechatTemplateItem> data = new HashMap<>();
+        data.put("first",new WechatTemplateItem("尊敬的用户您好，你有一笔待还金额！"));
+        data.put("keyword1",new WechatTemplateItem(qdh));
+        data.put("keyword2",new WechatTemplateItem(cpmc));
+        data.put("keyword3",new WechatTemplateItem("为了避免产生高额罚金和高额催收费，请及时还款！"));
+        data.put("remark",new WechatTemplateItem("融祥普惠！"));
+        wechatTemplateMessage.setData(data);
+        wechatTemplateMessage.setTouser(openid);
+        wechatTemplateMessage.setUrl(url);
+        templateMessageBussiness.send(wechatTemplateMessage,tlkAccesstokenEntity.getItem_access_token());
+    }
+}

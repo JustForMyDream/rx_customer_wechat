@@ -1,0 +1,89 @@
+package com.rx.webApplication.controller;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.rx.webApplication.dao.Impl.TlkCpEntityDaoImpl;
+import com.rx.webApplication.dao.TlkCpEntityDao;
+import com.rx.webApplication.entities.TlkCpEntity;
+import com.rx.webApplication.util.ResponseUtil;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by 李静 on 2017/7/26.
+ */
+@Controller
+@RequestMapping("cpxx")
+public class TlkCpEntityController {
+    Gson gson = new Gson();
+    Map<String,Object> map = new HashMap<>();
+
+    @RequestMapping("readcpall")
+    public void findallcp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException {
+        List<TlkCpEntity> tlkCpEntityList = new TlkCpEntityDaoImpl().findallcp();
+        map.put("tlkCpEntityList",tlkCpEntityList);
+        ResponseUtil.response(response, gson.toJson(map));
+    }
+
+    @RequestMapping("readcpallfy")
+    public void readcpallfy(HttpServletRequest request, HttpServletResponse response, @RequestParam("page") int page, @RequestParam("pagesize") int pagesize) throws ServletException, IOException, ParseException {
+        List<TlkCpEntity> tlkCpEntityList = new TlkCpEntityDaoImpl().findallcp(page,pagesize);
+        map.put("tlkCpEntityList",tlkCpEntityList);
+        ResponseUtil.response(response, gson.toJson(map));
+    }
+
+    @RequestMapping("readbylx")
+    public void findallcpBylx(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException {
+        String ITEM_CPLX = request.getParameter("ITEM_CPLX");
+        List<TlkCpEntity> tlkCpEntityList = new TlkCpEntityDaoImpl().findallcpBylx(ITEM_CPLX);
+        map.put("tlkCpEntityList",tlkCpEntityList);
+        ResponseUtil.response(response, gson.toJson(map));
+    }
+
+    /**
+     * 通过产品的id查询产品的详情
+     * @param request
+     * @param response
+     */
+    @RequestMapping("findcpxx")
+    public void findCpxxById(HttpServletRequest request,HttpServletResponse response){
+        String cpid = request.getParameter("id");
+        if(cpid!=null){
+            TlkCpEntity tlkCpEntity = new TlkCpEntityDaoImpl().findCpDetailInforById(cpid);
+            if(tlkCpEntity!=null){
+                map.put("code","200");
+                map.put("msg","success");
+                map.put("tlkCpEntity",tlkCpEntity);
+            }else {
+                map.put("code","500");
+                map.put("msg","未取得产品");
+            }
+        }else {
+            map.put("msg","未取得产品id");
+        }
+        ResponseUtil.response(response,gson.toJson(map));
+
+    }
+    @RequestMapping("readbylxfy")
+    public void findallcpBylx(HttpServletRequest request, HttpServletResponse response, @RequestParam("ITEM_CPLX") String ITEM_CPLX,@RequestParam("page") int page, @RequestParam("pagesize") int pagesize) throws ServletException, IOException, ParseException {
+        List<TlkCpEntity> tlkCpEntityList = new TlkCpEntityDaoImpl().findallcpBylx(page,pagesize,ITEM_CPLX);
+        map.put("tlkCpEntityList",tlkCpEntityList);
+        ResponseUtil.response(response, gson.toJson(map));
+
+    }
+
+    @RequestMapping("query")
+    public String query(HttpServletRequest request){
+        return "ProductList";
+    }
+}

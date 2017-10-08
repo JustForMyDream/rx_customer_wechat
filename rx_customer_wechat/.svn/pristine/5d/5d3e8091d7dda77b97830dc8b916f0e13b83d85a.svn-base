@@ -1,0 +1,16 @@
+header{
+    background-color: #F5F5F5!important;
+    height: 45px;
+}
+h1.am-header-title>a{
+    color: #101010!important;
+}
+.am-icon-exchange,.am-icon-save{
+    color: #444444;
+}
+.am-header-nav>a{
+    margin-top: 12px;
+}
+p{
+    margin:0 0 0 0
+}

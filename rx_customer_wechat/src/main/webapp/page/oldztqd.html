@@ -1,0 +1,167 @@
+<!doctype html>
+<html class="no-js">
+
+<head>
+    <meta charset="utf-8">
+    <title>历史签单</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="alternate icon" type="image/png" href="../i/favicon.png">
+    <link rel="stylesheet" href="../css/amazeui.min.css"/>
+    <link rel="stylesheet" href="../css/personalinformation.css">
+    <script src="../js/jquery-3.1.1.min.js"></script>
+    <script src="../js/amazeui.widgets.helper.min.js"></script>
+    <script src="../js/amazeui.min.js"></script>
+    <style type="text/css">
+        .span-left {
+            color: #ff9800;
+            /*margin-right: 10px;*/
+        }
+
+        .span-right {
+            float: right;
+        }
+
+        .a-right {
+            float: right;
+            text-decoration: none;
+            out-line: none;
+            color: gray;
+        }
+
+        .span-right {
+            float: right;
+        }
+
+        .icon-color {
+            color: grey;
+        }
+    </style>
+</head>
+
+<body>
+
+<header data-am-widget="header"
+        class="am-header am-header-default" style="text-align: center">
+    <div class="am-header-left am-header-nav">
+        <a href="#left-link" class="">
+            <span class=" am-icon-chevron-left am-icon-sm icon-color "></span>
+        </a>
+    </div>
+    <p>
+        在途签单
+    </p>
+    <div class="am-header-right am-header-nav">
+        <a href="qdlb.html" class="">
+            <span class=" am-icon-file-o am-icon-sm icon-color"></span>
+        </a>
+    </div>
+</header>
+
+
+<div class="am-panel am-panel-default">
+    <div class="am-panel-hd ">
+        <span class="am-icon-circle span-left am-icon-sm"></span>
+        <p style="display: inline-block">签单号:<span>RX1706070002</span></p>
+        <a class="am-icon-chevron-right a-right" href="qdxq.html"></a>
+    </div>
+    <div class="am-panel-bd">
+        <p>签单时间:<span class="span-right">2017-06-08</span></p>
+        <p>签单金额:<span class="span-right">1（万元）</span></p>
+        <p>签单人:<span class="span-right">杨青</span></p>
+        <!--<label>测试：</label><p>124342</p>-->
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+            //1.加载表格中的信息
+            loadComments();
+            //2.给按钮添加单击事件
+            $('#btnSend').click(function () {
+                var post_data = $('#form1').serializeArray();//获取序列化表单元素
+                //将请求提交到一般处理程序
+                $.post("InsertProduct.ashx", post_data, function (_datetext) {
+                    if (_datetext == 1) {
+                        alert("添加成功");
+                        loadComments();
+                    }
+                })
+            })
+    })
+    //页面加载事件
+    function loadComments() {
+        $.getJSON('GetAllProduct.ashx?id=' + Math.random(), null, function (_dataJSON) {
+            //获取tbody标签
+            var tbodyDate = $('#tbodyDate');
+            tbodyDate.empty();
+            //遍历JSON元素，添加到到Tbody
+            for (var i = 0; i < _dataJSON.length; i++) {
+                tbodyDate.append
+                ($('<tr><td>' + _dataJSON[i].Id + '</td>' +
+                        '<td>' + _dataJSON[i].Name + '</td>' +
+                        '<td>' + _dataJSON[i].Price + '</td>' +
+                        '<td>' + _dataJSON[i].Sales + '</td></tr>'));
+            }
+        })
+    }
+
+/////////////////////////////////////////////////////////////////////////////////
+    $(function () {
+        $('#btSearch').click(function () {
+            var checkDate = $('#checkDate').val();
+            var orderNo = $('#orderNo').val();
+            var sortFiled = $('#sortFiled').val();
+            var hotelSeq = $('#hotelSeq').val();
+            var tbody=window.document.getElementById("tbody-result");
+
+            $.ajax({
+                type: "post",
+                dataType: "json",
+                url: "ac/order/queryCheatOrder",
+                data: {
+                    hotelSeq: hotelSeq,
+                    orderNo: orderNo,
+                    sortFiled: sortFiled,
+                    checkDate: checkDate
+                },
+                success: function (msg) {
+                    if (msg.ret) {
+                        var str = "";
+                        var data = msg.data;
+
+                        for (i in data) {
+                            str += "<tr>" +
+                                    "<td>" + data[i].hotel_seq + "</td>" +
+                                    "<td>" + data[i].hotel_name + "</td>" +
+                                    "<td>" + data[i].order_no + "</td>" +
+                                    "<td>" + data[i].user_phone + "</td>" +
+                                    "<td>" + data[i].create_time + "</td>" +
+                                    "<td>" + data[i].user_id + "</td>" +
+                                    "<td>" + data[i].cellid + "</td>" +
+                                    "<td>" + data[i].gps_city + "</td>" +
+                                    "<td>" + data[i].cell_city + "</td>" +
+                                    "<td>" + data[i].distance + "</td>" +
+                                    "</tr>";
+                        }
+                        tbody.innerHTML = str;
+                    }
+                },
+                error: function () {
+                    alert("查询失败")
+                }
+            });
+        });
+    });
+</script>
+
+
+<script src="../js/jquery-3.1.1.min.js"></script>
+
+<script src="../js/amazeui.min.js"></script>
+</body>
+</html>

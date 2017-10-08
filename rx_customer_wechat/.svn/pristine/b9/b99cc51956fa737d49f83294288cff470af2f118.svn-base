@@ -1,0 +1,28 @@
+import com.rx.webApplication.util.DBFactory;
+
+import java.sql.Connection;
+
+/**
+ * Created by 王玉粮 on 2017/6/22.
+ */
+public class TestConnection {
+    public static void main(String []args){
+
+        int a = 1,b=2,c=3,d=4;
+
+        if(a==1){
+            System.out.println("aaaaa");
+            return;
+        }
+        System.out.println("hhhhhhhh");
+        if(b==2){
+            System.out.println("bbbbb");
+            return;
+        }
+        if(c==4){
+            System.out.println("cccc");
+            return;
+        }
+        System.out.println("okokokok");
+    }
+}

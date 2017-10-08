@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="alternate icon" type="image/png" href="../i/favicon.png">
+    <link rel="stylesheet" href="../css/amazeui.min.css"/>
+    <link rel="stylesheet" href="../css/personalinformation.css">
+    <script src="../js/jquery-3.1.1.min.js"></script>
+    <script src="../js/amazeui.widgets.helper.min.js"></script>
+    <script src="../js/amazeui.min.js"></script>
+    <style type="text/css">
+        hr {
+            margin: 0 0 0 0;
+        }
+
+        p {
+            height: 36px;
+        }
+
+        a, a:hover, a:visited, a:link, a:active {
+            text-decoration: none;
+            out-line: none;
+            color: #000000;
+        }
+
+        b {
+            font-size: 14px;
+            display: inline-block;
+            padding-bottom: 8px;
+            padding-top: 10px;
+        }
+
+        .innerhr {
+            padding-bottom: 10px;
+            border-top: 2px solid #ddd;
+            rgba(151, 151, 151, 0.29);
+            width: 94%;
+            margin-bottom: 0px;
+            margin-top: 0px;
+            margin: 0.1rem auto;
+            overflow: hidden;
+            clear: both;
+            display: block;
+        }
+
+        .spanfont {
+            padding-right: 11px;
+            font-family: PingFangSC-Regular;
+            font-size: 16px;
+            color: #4a4a4a;
+            line-height: 27px;
+            text-align: left;
+        }
+
+        .header-nav1 p {
+            color: white;
+        }
+
+        .header-nav1 {
+            background-color: rgb(254, 196, 52) !important;
+        }
+
+        .baocun {
+            height: auto;
+            width: 100%;
+            padding: 10% 25%;
+            color: white;
+        }
+
+
+        .spanleft{
+            float: left;
+        }
+        .spantitle{
+            margin-left: -50px;
+        }
+
+        .content {
+            width: 100%;
+            height: auto;
+            background: white;
+            padding: 25px 10px;
+        }
+    </style>
+    <title>征信信息</title>
+</head>
+<body>
+<header data-am-widget="header"
+        class="am-header am-header-default header-nav1" style="text-align: center;background-color: rgb(254,169,52);">
+    <div class="am-header-left am-header-nav">
+        <a href="#left-link" class="">
+            <img src="../img/Star%20Copy%202.png" style="width: 15px;height: 26px;margin-left: -28px;margin-top: -2px">
+            <!--<i class="am-header-icon am-icon-exchange"></i>-->
+        </a>
+    </div>
+    <p>
+        <span class="spanleft">Back</span>
+        <span class="spantitle">征信信息</span>
+    </p>
+    <div class="am-header-right am-header-nav">
+        <!--<a href="#right-link" class="">-->
+        <!--<i class="am-header-icon am-icon-save"></i>-->
+        <!--</a>-->
+    </div>
+</header>
+<div class="am-panel am-panel-default">
+    <div class="am-panel-hd " style="text-align: center">
+        <b style="text-align: center;font-size: 17px;padding: 0px">基本信息</b>
+    </div>
+    <div class="am-panel-bd">
+        <p data-am-collapse="{parent: '#collapase-nav-1', target: '#user-nav'}">
+            <span class="spanfont">征信信息: </span><span class="spanfont">47aada6b7467</span>
+        </p>
+        <hr class="innerhr"/>
+        <p data-am-collapse="{parent: '#collapase-nav-1', target: '#user-nav'}">
+            <span class="spanfont">征信逾期：</span><span class="spanfont">否</span>
+        </p>
+        <hr class="innerhr"/>
+        <p data-am-collapse="{parent: '#collapase-nav-1', target: '#user-nav'}">
+            <span class="spanfont">最近三月逾期笔数:</span><span class="spanfont">1(万元)</span>
+        </p>
+    </div>
+</div>
+<HR style="height: 2px; dashed: #259b24" color=#259b24 SIZE=1>
+<div class="am-panel am-panel-default">
+    <div class="am-panel-hd " style="text-align: center">
+        <b style="text-align: center;font-size: 17px;padding: 0px">职业信息</b>
+    </div>
+    <div class="am-panel-bd">
+        <p data-am-collapse="{parent: '#collapase-nav-1', target: '#user-nav'}">
+            <span class="spanfont">职业类型: </span><span class="spanfont">自由职业者</span>
+        </p>
+        <hr class="innerhr"/>
+        <p data-am-collapse="{parent: '#collapase-nav-1', target: '#user-nav'}">
+            <span class="spanfont">月收入：</span><span class="spanfont">1010</span>
+        </p>
+        <hr class="innerhr"/>
+        <p data-am-collapse="{parent: '#collapase-nav-1', target: '#user-nav'}">
+            <span class="spanfont">工作年限:</span><span class="spanfont">1</span>
+        </p>
+        <hr class="innerhr"/>
+        <p data-am-collapse="{parent: '#collapase-nav-1', target: '#user-nav'}">
+            <span class="spanfont">工资发放方式:</span><span class="spanfont">打卡</span>
+        </p>
+    </div>
+</div>
+<div style="text-align: center">
+    <button type="button" class="am-btn am-badge-warning am-round am-btn-lg"
+            style="width: 174px;background-color: #ffba0a; color: white">保存
+    </button>
+</div>
+
+</body>
+</html>

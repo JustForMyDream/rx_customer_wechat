@@ -1,0 +1,65 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Dell
+  Date: 2017/7/28
+  Time: 18:33
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>融祥金融</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="alternate icon" type="image/png" href="../i/favicon.png">
+    <link rel="stylesheet" href="../css/qiandan.css">
+    <%@include file="../../page/jsAndCss.jsp"%>
+</head>
+
+<body>
+<header data-am-widget="header" class="am-header">
+    <div class="am-header-left am-header-nav">
+        <a href="/rx/khqd/ztqd" class="">
+            <img src="../img/leftjt.png" class="left"><span>返回</span>
+        </a>
+    </div>
+    <p>
+        历史签单
+    </p>
+    <div class="am-header-right am-header-nav">
+        <!--<a href="#right-link" class="">-->
+        <!--<i class="am-header-icon am-icon-save"></i>-->
+        <!--</a>-->
+    </div>
+</header>
+<c:forEach var="bean" items="${qdlbInf}">
+    <div class="content">
+        <div class="content1">
+            <div class="content1-left">
+                <div class="yuanquan" style="background:#e5e2da;"></div>
+            </div>
+            <p>签单号：<span name="qdh">${bean.qdh}</span></p>
+            <a href="/rx/khqd/qdxq?qdh=${bean.qdh}&qdsj=${bean.qdsj}&dklx=${bean.khdklx}&qdr=${bean.khname}&dkje=${bean.dkje}&qdxxid=${bean.qdxxid}">
+                <img src="../img/right.png" >
+            </a>
+        </div>
+        <div class="content2">
+            <p>签单时间:<span name="qdsj">${bean.qdsj}</span></p>
+            <p>意向金额:<span name="dkje">${bean.dkje}</span>(万元)</p>
+            <p>签单人:<span name="khname">${bean.khname}</span>(万元)</p>
+        </div>
+    </div>
+    <div class="content3"></div>
+</c:forEach>
+
+</body>
+</html>
+<script>
+</script>

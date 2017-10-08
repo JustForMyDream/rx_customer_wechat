@@ -1,0 +1,268 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: Aria
+  Date: 2017/7/20
+  Time: 09:12
+  To change this template use File | Settings | File Templates.
+--%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <title>融祥金融</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" href="../css/message.css">
+    <script src="../js/jquery.min.js"></script>
+</head>
+<body id="myBody">
+<form class="container">
+    <div id="logo"><img src="../img/rxFiancal.png"></div>
+    <div class="myInput">
+        <div class="inputHead">
+            +86
+        </div>
+        <div class="icon"></div>
+        <div class="inputBody">
+            <input class="phoneField" type="text" placeholder="手机号码" id="telephone" oninput="verificationPhone(event)"
+                   onporpertychange="verificationPhone(event)">
+        </div>
+        <div class="inputFeet">
+            <img id="cancel" src="../img/cancel.png" alt="">
+        </div>
+    </div>
+    <div class="myInput">
+        <div class="inputHead">
+            <img src="../img/tel.png" class="phoneIcon"/>
+        </div>
+        <div class="icon"></div>
+        <div class="inputBody">
+            <input class="codeField" type="text" placeholder="验证码" id="code" oninput="verificationCode(event)"
+                   onporpertychange="verificationCode(event)"></div>
+        <div class="inputFeet">
+            <div id="send">获取验证码</div>
+        </div>
+    </div>
+    <div id="remind">
+        提示：新用户请输入手机号码进行验证
+    </div>
+    <div class="myButton" id="submit">
+        进入
+    </div>
+</form>
+<div id="notice">
+    Hello World!
+</div>
+</body>
+<script>
+    var reg = /^1[3|4|5|7|8][0-9]{9}$/;//手机号码验证规则
+    var reg3 = /^\d{11,11}$/;//手机号码输入完毕验证
+    var reg4 = /^\d{6,6}$/;//验证码验证
+
+    var pPhone=false;
+    var pCode=false;
+    var flag=false;
+    var sendflag=false;
+
+    var telephone=document.getElementById("telephone");
+    var code=document.getElementById("code");
+    var cancel=document.getElementById("cancel");
+    var send=document.getElementById("send");
+    var notice=document.getElementById("notice");
+    var submit=document.getElementById("submit");
+
+
+    function fade(type, el, duration, IEsupport) {
+        var isIn     = (type == 'in'),
+            IE       = (IEsupport) ? IEsupport : false,
+            opacity  = isIn ? 0 : 1,
+            interval = 50,
+            gap      = interval / duration;
+
+        if(isIn) {
+            el.style.display = 'block';
+            el.style.opacity = opacity;
+            if(IE) {
+                el.style.filter = 'alpha(opacity=' + opacity + ')';
+                el.style.filter = 'progid:DXImageTransform.Microsoft.Alpha(Opacity=' + opacity + ')';
+            }
+        }
+
+        function func() {
+            opacity = isIn ? opacity + gap : opacity - gap;
+            el.style.opacity = opacity;
+            if(IE) {
+                el.style.filter = 'alpha(opacity=' + opacity * 100 + ')';
+                el.style.filter = 'progid:DXImageTransform.Microsoft.Alpha(Opacity=' + opacity * 100 + ')';
+            }
+            if(opacity <= 0 || opacity >= 1) { window.clearInterval(fading); }
+            if(opacity <= 0) { el.style.display = "none"; }
+        }
+        var fading = window.setInterval(func, interval);
+    }//弹入，弹出
+
+    function countdown(){
+        sendflag=true;
+        flag=true;
+        var time=60;
+        var h;
+        h= setInterval(function(){
+            if(time<10){
+                time='0'+time;
+            }
+            send.innerText=time;
+            time--;
+            if(time<0){
+                clearInterval(h);
+                flag = false;
+                sendflag=false;
+                send.innerText='获取验证码';
+            }
+        },1000);
+    }//倒计时
+
+    function cleanPhone() {
+        telephone.value=null;
+        cancel.style.display='none'
+    }//清空手机号
+
+    function showMessage(text) {
+        if(notice.style.display!='block') {
+            notice.innerText = text;
+            fade('in', notice, 600, true);
+            setTimeout("fade('out', notice, 600, true)", 1000);
+        }
+    }//开启弹出框
+
+    function verificationPhone() {
+        telephone.value = telephone.value.replace(/[^0-9]/g,'');//只能输入数字
+        telephone.value = telephone.value.substr(0, 11);//超过11位截取位数
+        if(telephone.value.length>0)
+            cancel.style.display='block';
+        else
+            cancel.style.display='none';
+        if(reg.test(telephone.value)){
+            pPhone=true;
+        }else {
+            pPhone=false;
+        }
+        //verificationSubmit();
+    }//手机格式验证
+
+    function verificationCode() {
+        telephone.value = telephone.value.replace(/[^0-9]/g,'');//只能输入数字
+        code.value=code.value.substr(0, 6)//超过6位截取位数
+        if(reg4.test(code.value)){
+            pCode=true;
+        }else {
+            pCode=false;
+        }
+        //verificationSubmit();
+    }//验证码验证
+
+    function verificationAjax() {
+        if(!pPhone){
+            showMessage("手机号码格式不正确");
+        }else if(!pCode){
+            showMessage("验证码格式不正确");
+        }else {
+            var confirmCode = code.value;
+            var phoneNumber = telephone.value;
+            $.ajax({
+                url: "../entwec/VerificationCode",
+                data: {
+                    phoneNumber: phoneNumber,
+                    confirmCode: confirmCode
+                },
+                contentType: "application/x-www-form-urlencoded",
+                type: "get",
+                dataType: "json",
+                success: function (data) {
+                    console.log(data)
+                    if (data.code == 200) {
+                        showMessage('验证成功');
+                        window.location.href = "../entwec/login";
+                    } else if (data.msg == "differentFromOA365") {
+                        showMessage('该手机号与平台注册账号不符');
+                    } else {
+                        showMessage('验证失败');
+                    }
+                },
+                error: function () {
+                    showMessage('连接服务器失败');
+                }
+            })
+        }
+    }
+
+    function sendCode() {
+        if(sendflag==true){
+            showMessage('已发送验证码')
+        }else {
+            if (pPhone && !flag) {
+                var phoneNumber = telephone.value;
+                $.ajax({
+                    url: "../entwec/sendCode",
+                    data: {
+                        "phoneNumber": phoneNumber
+                    },
+                    contentType: "application/x-www-form-urlencoded",
+                    type: "get",
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data);
+                        countdown();
+                        if (data.msg == "alreadySendMessage") {
+                            showMessage("短信已发送")
+                        } else if (data.msg == "sendSuccess") {
+                            showMessage("发送成功");
+                        } else if (data.msg == "sendFail") {
+                            showMessage("发送失败");
+                        } else if (data.msg == "messageNumberIsFull") {
+                            showMessage("今日短信次数到上限");
+                        } else if (data.msg == "PhoneIsError") {
+                            showMessage("手机号码错误");
+                        } else {
+                            showMessage("系统错误");
+                        }
+                    },
+                    error: function () {
+                        showMessage("连接服务器失败");
+                    }
+                });
+            } else {
+                showMessage("手机号码格式不正确");
+            }
+        }
+    }
+
+    cancel.addEventListener("click",cleanPhone);
+
+    telephone.addEventListener('focus',function () {
+        telephone.placeholder="";
+    })
+
+    telephone.addEventListener('blur',function () {
+        telephone.placeholder="手机号码";
+    })
+
+    code.addEventListener('focus',function () {
+        code.placeholder="";
+    })
+
+    send.addEventListener("click",sendCode)
+
+    code.addEventListener('blur',function () {
+        code.placeholder="验证码";
+    })
+
+    submit.addEventListener('click',verificationAjax)
+</script>
+</html>

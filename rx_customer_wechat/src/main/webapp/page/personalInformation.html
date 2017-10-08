@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人资料</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="alternate icon" type="image/png" href="../i/favicon.png">
+    <link rel="stylesheet" href="../css/amazeui.min.css"/>
+    <link rel="stylesheet" href="../css/personalinformation.css">
+    <script src="../js/jquery-3.1.1.min.js"></script>
+    <script src="../js/amazeui.widgets.helper.min.js"></script>
+    <script src="../js/amazeui.min.js"></script>
+</head>
+<body>
+
+<header data-am-widget="header"
+        class="am-header am-header-default" style="text-align: center">
+    <div class="am-header-left am-header-nav">
+        <a href="#left-link" class="">
+            <i class="am-header-icon am-icon-exchange"></i>
+        </a>
+    </div>
+    <p>
+        个人资料
+    </p>
+    <div class="am-header-right am-header-nav">
+        <a href="#right-link" class="">
+            <i class="am-header-icon am-icon-save"></i>
+        </a>
+    </div>
+</header>
+
+<form>
+<ul class="am-list admin-sidebar-list" id="collapase-nav-1">
+
+    <li class="am-panel">
+        <p data-am-collapse="{parent: '#collapase-nav-1', target: '#user-nav'}">
+            基础信息<i class="am-icon-angle-right am-fr am-margin-right"></i>
+        </p>
+        <ul class="am-list am-collapse admin-sidebar-sub" id="user-nav">
+            <li>
+                <div>
+                    姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：
+                    <input type="text" name="khxm">
+                </div>
+            </li>
+            <li>
+                <div>
+                    性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：
+                    <input type="text">
+                </div>
+            </li>
+            <li>
+                <div>
+                    手机号码：
+                    <input type="text">
+                </div>
+            </li>
+            <li>
+                <div>
+                    座机号码：
+                    <input type="text">
+                </div>
+            </li>
+            <li>
+                <div>
+                    身份证号：
+                    <input type="text">
+                </div>
+            </li>
+        </ul>
+    </li>
+
+    <li class="am-panel">
+        <p data-am-collapse="{parent: '#collapase-nav-1', target: '#company-nav'}">
+            征信信息
+            <i class="am-icon-angle-right am-fr am-margin-right"></i>
+        </p>
+        <ul class="am-list am-collapse admin-sidebar-sub" id="company-nav">
+            <li>
+                <p>
+                    征信信息：
+                    <select data-am-selected>
+                        <option value="a">白户</option>
+                        <option value="b">黑户</option>
+                        <option value="o">不良记录</option>
+                    </select>
+                </p>
+            </li>
+            <li>
+                <p>
+                    有无征信逾期：
+                    <select data-am-selected>
+                        <option value="a">有</option>
+                        <option value="b">无</option>
+                    </select>
+                </p>
+            </li>
+            <li><div>
+                近三月逾期笔数：
+                <input type="text">
+                </div>
+            </li>
+        </ul>
+    </li>
+
+    <li class="am-panel">
+        <p data-am-collapse="{parent: '#collapase-nav-1', target: '#job-nav'}">
+            职业信息 <i class="am-icon-angle-right am-fr am-margin-right"></i>
+        </p>
+        <ul class="am-list am-collapse admin-sidebar-sub" id="job-nav">
+            <li>
+                <p>
+                    职业类别：
+                    <select data-am-selected>
+                        <option value="a">企业主</option>
+                        <option value="b">个体工商户</option>
+                        <option value="o">上班人群</option>
+                        <option value="f">学生</option>
+                        <option value="e">无固定职业</option>
+                    </select>
+                </p>
+            </li>
+            <li>
+                <p>
+                    工作年限：
+                    <select data-am-selected>
+                        <option value="a">有</option>
+                        <option value="b">无</option>
+                    </select>
+                </p>
+            </li>
+            <li><p>
+                工资发放方式：
+                <select data-am-selected>
+                    <option value="a">打卡</option>
+                    <option value="a">现金</option>
+                </select>
+            </p>
+            </li>
+            <li>
+                    <div>
+                        月工资收入：
+                        <input type="text">
+                    </div>
+            </li>
+        </ul>
+    </li>
+
+</ul>
+</form>
+<script>
+    $().collapse('toggle')
+    $('p').click(function () {
+        if($(this).next().length>0) {
+            if ($(this).children().hasClass('am-icon-angle-down')) {
+                $(this).children().removeClass('am-icon-angle-down')
+                $(this).children().addClass('am-icon-angle-right')
+            } else {
+                $(this).siblings().children().removeClass('am-icon-angle-down')
+                $(this).parent().siblings().children('p').children().removeClass('am-icon-angle-down')
+                $(this).parent().siblings().children('p').children().addClass('am-icon-angle-right')
+                $(this).children().addClass('am-icon-angle-down')
+            }
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+html{
+    font-size:16px;
+}
+html,body{
+    height: 100%;
+    margin: 0 0 0 0;
+    color: white;
+}
+body{
+  /*  -webkit-box-shadow: 0px 0px 175px white inset;
+    opacity: 0.76;
+    background-image: linear-gradient(-216deg, #FF9648 0%, #FFE228 85%, #FFEF23 100%);*/
+    background-image: url("../img/background.png");
+    background-size: cover;
+}
+.container{
+    text-align: center;
+    padding-top: 7.625rem;
+}
+#logo{
+    padding-bottom: 1.125rem;
+}
+#logo>img {
+    width: 12rem;
+}
+.phoneIcon{
+    margin: 0.6rem 0 0.6rem 0;
+    height: 1.8rem;
+}
+.myInput{
+    text-align: left;
+    font-size: 1rem;
+    background-color: rgba(255,255,255,0.5);
+}
+.myInput,.myButton{
+    width: 19rem;
+    border-radius: 1.5rem;
+    height: 3rem;
+    line-height: 3rem;
+    vertical-align: middle;
+    margin: 1.625rem auto 0 auto;
+}
+.myButton{
+    opacity: 0.69;
+    background: #FFBA0A;
+    font-size: 1.25rem;
+}
+#remind{
+    font-size: 0.75rem;
+    margin-top: 0.9375rem;
+    padding-bottom: 1rem;
+    font-family: PingFangSC-Regular;
+    color:#e3fffe;
+}
+.icon{
+    width: 0.0625rem;
+    background-image: url("../img/Oval.png");
+    height: 2rem!important;
+    background-size: cover;
+    margin: 0.5rem 0.5625rem 0.5rem 0;
+}
+.inputHead,.inputBody,.icon,.inputFeet{
+    line-height: inherit;
+    vertical-align: middle;
+    height: inherit;
+}
+.inputHead,.inputBody,.icon{
+    float: left;
+}
+.inputFeet{
+    float: right;
+    padding-right: 1.5rem;
+}
+#cancel{
+    height: 1rem;
+    margin: 1rem 0 1rem 0;
+    display: none;
+}
+.inputHead{
+    padding-left: 1.5rem;
+    width: 14%;
+}
+.phoneField,.codeField{
+    font-size: 1rem;
+    height: 100%;
+    padding: 0 0 0 0;
+    color:white;
+    background-color: transparent;
+}
+.phoneField{
+    width: 11rem;
+}
+.codeField{
+    width: 6rem;
+}
+input::-webkit-input-placeholder{
+    color: white;
+}
+input{
+    border: 0px;
+    outline: none;
+}
+#send{
+    text-align: center;
+    width: 3.125rem;
+    border: 0.1rem;
+    margin: 0.8rem 0 0.8rem 0;
+    line-height: 1.125rem;
+    vertical-align: middle;
+    height: 1.125rem;
+    font-size: 0.625rem;
+    border-radius: 2.4375rem;
+    border-style: solid;
+    padding: 0 0.75rem 0 0.75rem;
+    word-break:keep-all;           /* 不换行 */
+    white-space:nowrap;          /* 不换行 */
+    overflow:hidden;               /* 内容超出宽度时隐藏超出部分的内容 */
+    text-overflow:ellipsis;         /* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+}
+#send:hover,.myButton{
+    cursor: pointer;
+}
+#notice{
+    position: fixed;
+    top: 60%;
+    background-color: #ff8625;
+    width: 50%;
+    left: 25%;
+    height: 3rem;
+    border-radius: 1.5rem;
+    box-shadow: black;
+    line-height: 3rem;
+    vertical-align: middle;
+    text-align: center;
+    box-shadow: 0px 2px 10px #888888;
+    display: none;
+    font-size: 0.5rem;
+}

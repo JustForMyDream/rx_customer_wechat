@@ -1,0 +1,35 @@
+driver = com.mysql.jdbc.Driver
+
+
+#url = jdbc:mysql://192.168.1.202:3307/obpm_crm_new?characterEncoding=UTF8
+##url = jdbc:mysql://121.40.149.94:3307/obpm_crm_new?characterEncoding=UTF8
+url = jdbc:mysql://118.89.34.11:3306/obpm_crm_new?characterEncoding=UTF8
+url = jdbc:mysql://cd.cdrxjr.com:3333/obpm_crm_new?characterEncoding=UTF8
+username = root
+<<<<<<< .mine
+#password = 123456
+password = 1996919
+=======
+#password = 123456
+#password = 1996919
+>>>>>>> .r365
+password = rxadmin479!!!
+
+
+#url2 = jdbc:mysql://192.168.1.202:3307/obpm?characterEncoding=UTF8
+#url2 = jdbc:mysql://121.40.149.94:3307/obpm?characterEncoding=UTF8
+url2 = jdbc:mysql://118.89.34.11:3306/obpm?characterEncoding=UTF8
+url2 = jdbc:mysql://cd.cdrxjr.com:3333/obpm?characterEncoding=UTF8
+username2 = root
+<<<<<<< .mine
+#password2 = 123456
+password2 = 1996919
+=======
+#password2 = 123456
+#password2 = 1996919
+>>>>>>> .r365
+password2 = rxadmin479!!!
+
+
+
+

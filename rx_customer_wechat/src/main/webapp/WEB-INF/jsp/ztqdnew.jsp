@@ -1,0 +1,162 @@
+<%@ page import="com.rx.webApplication.SessionStorage" %><%--
+  Created by IntelliJ IDEA.
+  User: Dell
+  Date: 2017/7/28
+  Time: 16:29
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>融祥金融</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="alternate icon" type="image/png" href="../i/favicon.png">
+    <link rel="stylesheet" href="../css/qiandan.css">
+    <%@include file="../../page/jsAndCss.jsp"%>
+</head>
+<style>
+body{
+    background: rgb(242,242,242);
+}
+</style>
+<body>
+<header data-am-widget="header" class="am-header">
+    <div class="am-header-left am-header-nav">
+
+    </div>
+    <p>
+        在途签单
+    </p>
+    <div class="am-header-right am-header-nav">
+        <a href="/rx/khqd/qdlb" class="">
+            <span class=" am-icon-file-text-o am-icon-sm icon-color " style="color: white" ></span>
+        </a>
+    </div>
+</header>
+
+<div id="defaultimg" style="text-align: center;display: none;padding-top: 36px">
+    <p style="text-align: center">
+        <img src="../img/tem.png">
+    </p>
+    暂无在途签单信息
+</div>
+
+<c:forEach var="bean" items="${ztqdinf}">
+
+<div class="content">
+    <div class="content1">
+        <div class="content1-left">
+            <div class="yuanquan"></div>
+        </div>
+        <p>签单号：<span name="qdh">${bean.qdh}</span></p>
+        <a href="/rx/khqd/qdxq?qdh=${bean.qdh}&qdsj=${bean.qdsj}&dklx=${bean.khdklx}&qdr=${bean.khname}&dkje=${bean.dkje}&qdxxid=${bean.qdxxid}">
+            <img src="../img/right.png" >
+        </a>
+    </div>
+    <div class="content2">
+        <p>签单时间:<span name="qdsj">${bean.qdsj}</span></p>
+        <p>意向金额:<span name="dkje">${bean.dkje}</span>(万元)</p>
+        <p>签单人:<span name="khname">${bean.khname}</span>(万元)</p>
+    </div>
+</div>
+<div class="content3"></div>
+</c:forEach>
+
+<%--<div class="content">--%>
+    <%--<div class="content1">--%>
+        <%--<div class="content1-left">--%>
+            <%--<div class="yuanquan"></div>--%>
+        <%--</div>--%>
+        <%--<p>签单号：<span>RX1706070002</span></p>--%>
+        <%--<img src="../img/right.png">--%>
+    <%--</div>--%>
+    <%--<div class="content2">--%>
+        <%--<p>签单时间:<span>2017-06-08</span></p>--%>
+        <%--<p>意向金额:<span>1</span>(万元)</p>--%>
+        <%--<p>签单人:<span>汤清</span></p>--%>
+    <%--</div>--%>
+<%--</div>--%>
+<%--<div class="content3"></div>--%>
+</body>
+</html>
+<script>
+
+    $(function(){
+        if("${ztqdinf}" == "true"){
+            $("#defaultimg").css("display","block");
+        }else{
+            $("#defaultimg").css("display","none");
+        }
+    });
+
+    var userLocation = "<%=session.getAttribute(SessionStorage.LOCATION)%>";
+    var map, geolocation;
+    //加载地图，调用浏览器定位服务
+    var longitude;//经度
+    var latitude;//纬度
+
+    if(userLocation != "1"){
+        map = new AMap.Map('container', {
+            resizeEnable: true
+        });
+
+        map.plugin('AMap.Geolocation', function () {
+            geolocation = new AMap.Geolocation({
+                enableHighAccuracy: true,//是否使用高精度定位，默认:true
+                timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+                buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+                zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+                buttonPosition: 'RB'
+            });
+            map.addControl(geolocation);
+            geolocation.getCurrentPosition();
+            AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+            AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+        });
+
+        //解析定位结果
+        function onComplete(data) {
+            longitude = data.position.getLng();
+            latitude = data.position.getLat();
+            console.log("longitude:" + longitude + ",latitude" + latitude);
+            $.ajax({
+                url: "../../rx/location/userLocation",
+                data: {
+                    "longitude": longitude,
+                    "latitude": latitude
+                },
+                type: "get",
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function () {
+                }
+            })
+
+
+//        var str=['定位成功'];
+//        str.push('经度：' + data.position.getLng());
+//        str.push('纬度：' + data.position.getLat());
+//        if(data.accuracy){
+//            str.push('精度：' + data.accuracy + ' 米');
+//        }//如为IP精确定位结果则没有精度信息
+//        str.push('是否经过偏移：' + (data.isConverted ? '是' : '否'));
+//        document.getElementById('tip').innerHTML = str.join('<br>');
+        }
+        //解析定位错误信息
+        function onError(data) {
+            // document.getElementById('tip').innerHTML = '定位失败';
+        }
+    }
+
+
+</script>

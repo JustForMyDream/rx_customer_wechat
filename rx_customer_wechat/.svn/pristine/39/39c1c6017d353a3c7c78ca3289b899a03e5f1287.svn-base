@@ -1,0 +1,28 @@
+import com.google.gson.Gson;
+import com.rx.webApplication.dao.Impl.TlkEnterpriseWeChatTokenDaoImpl;
+import com.rx.webApplication.dao.TlkEnterpriseWeChatTokenDao;
+import com.rx.webApplication.util.enterpriseWechat.EnterpriseMessage;
+import com.rx.webApplication.util.enterpriseWechat.EnterpriseMessageImpl;
+import com.rx.webApplication.util.enterpriseWechat.EnterpriseMessageTemplate;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class TestSendEnterpriseMessage {
+    public static void main(String []args){
+        Gson gson = new Gson();
+        EnterpriseMessage enterpriseMessage = new EnterpriseMessageImpl();
+        TlkEnterpriseWeChatTokenDao tlkEnterpriseWeChatTokenDao = new TlkEnterpriseWeChatTokenDaoImpl();
+        EnterpriseMessageTemplate enterpriseMessageTemplate = new EnterpriseMessageTemplate();
+        Map<String,String> map = new HashMap<>();
+        String value = "哈哈哈,我是测试";
+        map.put("content",value);
+        enterpriseMessageTemplate.setMsgtype("text");
+        enterpriseMessageTemplate.setAgentid(1000004);
+        enterpriseMessageTemplate.setText(map);
+        System.out.println(gson.toJson(enterpriseMessageTemplate));
+        System.out.println("tlkEnterpriseWeChatTokenDao.getToken():"+tlkEnterpriseWeChatTokenDao.getToken());
+        String result = enterpriseMessage.send(enterpriseMessageTemplate,"_oBAvFvuoyHGRWkgsUeu9gF5UjLRyk-UUyaQuoU3jSBept698WTUxEO0le2LmyeyWWO1BRKrQEFj8aU1txgssu6MmSus0TkqPIhHmSWKo3OaYVcJY6zJnBZiWohldZ8xGW_KvpEl8S_rQO9BkyjRzdnnptoq1Gy8EMAzHDHIcSotH6BHTEt5isxHRDLAsfWyHo_AHqZwZdir6iCQ1EEeFxxArofxLQfeuDW_NnvjIBiJdIUf0TIXz8vS-taIQgQKD3ToWKBwiLa-4GS-DecnN4HRDtXiPi6PdddSUHEy6i0");
+        System.out.println("enterpriseResult:"+result);
+    }
+}

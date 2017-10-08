@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>资产信息-房产信息</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="alternate icon" type="image/png" href="../i/favicon.png">
+    <link rel="stylesheet" href="../css/amazeui.min.css"/>
+    <link rel="stylesheet" href="../css/personalinformation.css">
+    <script src="../js/jquery-3.1.1.min.js"></script>
+    <script src="../js/amazeui.widgets.helper.min.js"></script>
+    <script src="../js/amazeui.min.js"></script>
+</head>
+<style>
+    body{
+        background: white;
+    }
+    .header-nav1{
+        background-color: rgb(254,196,52)!important;
+    }
+    .header-nav1 p{
+        color: white;
+    }
+    .header-nav1 p span{
+        float:left;
+    }
+    .content{
+        width: 100%;
+        height: auto;
+        background: white;
+        padding: 25px 10px;
+    }
+    .content-zzxx{
+        text-align: center;
+        color: black;
+        background-color: rgb(242,242,242)!important;
+        font-weight: 200;
+    }
+    li.am-panel>p {
+        background-color: white;
+        height: 42px;
+        line-height: 42px;
+        vertical-align: middle;
+        color: black;
+    }
+    .baocun{
+        height: auto;
+        width: 100%;
+        padding: 10% 25%;
+        color: white;
+    }
+    input{
+        width: 66%;
+        height: 100%;
+        /*float: right;*/
+        outline: none;
+        border: none;
+        color: black;
+        padding-left: 10px;
+        display:inline;
+        padding-bottom: 5px;
+    }
+    select{
+        width: 66%;
+        height: 100%;
+    }
+    .am-badge-warning{
+        background-color: rgb(254,196,52);
+    }
+
+</style>
+<body>
+<header data-am-widget="header"
+        class="am-header am-header-default header-nav1" style="text-align: center;background-color: rgb(254,169,52);">
+    <div class="am-header-left am-header-nav">
+        <a href="#left-link" class="">
+            <img src="../img/Star%20Copy%202.png" style="width: 15px;height: 26px;margin-left: -28px;margin-top: -2px">
+            <!--<i class="am-header-icon am-icon-exchange"></i>-->
+        </a>
+    </div>
+    <p>
+        <span>Back</span>
+        资产信息
+    </p>
+    <div class="am-header-right am-header-nav">
+        <!--<a href="#right-link" class="">-->
+        <!--<i class="am-header-icon am-icon-save"></i>-->
+        <!--</a>-->
+    </div>
+</header>
+<div class="content">
+    <ul class="am-list admin-sidebar-list" id="collapase-nav-1">
+        <li class="am-panel content-zzxx" >
+            <p data-am-collapse="{parent: '#collapase-nav-1', target: '#user-nav'}" style="background-color: rgb(242,242,242)!important; font-weight: 200!important;">
+                房产信息
+            </p>
+        </li>
+        <li class="am-panel">
+            <p data-am-collapse="{parent: '#collapase-nav-1', target: '#user-nav'}">
+                房产性质：
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+                <select data-am-selected>
+                <option value="a">全款</option>
+                <option value="b">按揭</option>
+                </select>
+            </p>
+
+        </li>
+
+        <li class="am-panel">
+            <p data-am-collapse="{parent: '#collapase-nav-1', target: '#company-nav'}">
+                房屋类型：
+                <select data-am-selected>
+                <option value="a">商品房</option>
+                <option value="b">拆迁安置房</option>
+                    <option value="c">单位房</option>
+                    <option value="d">自建房</option>
+                    <option value="e">商铺房</option>
+            </select>
+
+
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+            </p>
+        </li>
+
+        <li class="am-panel">
+            <p data-am-collapse="{parent: '#collapase-nav-1', target: '#role-nav'}">
+                月供金额(元)：<input class="am-margin-right"/>
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+            </p>
+        </li>
+        <li class="am-panel">
+            <p data-am-collapse="{parent: '#collapase-nav-1', target: '#role-nav'}">
+                双证是否齐全：
+                <select  data-am-selected>
+                    <option value="a">有</option>
+                    <option value="b">无</option>
+                </select>
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+            </p>
+        </li>
+        <li class="am-panel">
+            <p data-am-collapse="{parent: '#collapase-nav-1', target: '#role-nav'}">
+                月供金额(元)：<input class="am-margin-right"/>
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+            </p>
+        </li>
+        <li class="am-panel">
+            <p data-am-collapse="{parent: '#collapase-nav-1', target: '#role-nav'}">
+                总面积(平米):<input class="am-margin-right"/>
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+            </p>
+        </li>
+        <li class="am-panel">
+            <p data-am-collapse="{parent: '#collapase-nav-1', target: '#role-nav'}">
+                市场单价：<input class="am-margin-right"/>
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+            </p>
+        </li>
+        <li class="am-panel">
+            <p data-am-collapse="{parent: '#collapase-nav-1', target: '#role-nav'}">
+                购房时间：<input class="am-margin-right" type="date"/>
+                <!--<i class="am-icon-angle-right am-fr am-margin-right"></i>-->
+            </p>
+        </li>
+    </ul>
+
+    <div class="baocun">
+        <button type="button" class="am-btn am-badge-warning am-round am-btn-lg" style="width: 174px;border: none">保存</button>
+    </div>
+</div>
+</body>
+</html>

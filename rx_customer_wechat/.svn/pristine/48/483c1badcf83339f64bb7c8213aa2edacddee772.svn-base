@@ -1,0 +1,380 @@
+<%@ page import="com.rx.webApplication.SessionStorage" %><%--
+  Created by IntelliJ IDEA.
+  User: 王玉粮
+  Date: 2017/7/24
+  Time: 8:41
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>资产信息</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <%@include file="../../page/jsAndCss.jsp"%>
+    <link rel="stylesheet" href="../css/loader.css"/>
+    <%--<link rel="stylesheet" href="../css/pageHeader.css"/>--%>
+    <style>
+        body {
+            background-color: #F0F0F0;
+            width: 100%;
+        }
+        .asset_row{
+            width: 100%;
+        }
+        .asset_name{
+            width: 100%;
+            height: 50px;
+            background-color: white;
+            box-shadow: inset;
+            margin-bottom: 2%;
+
+        }
+        .asset_name p{
+            color: black;
+            margin: 0px auto;
+            width: 200px;
+            float: left;
+            margin-left: 10px;
+            margin-top: 10px;
+            font-family:PingFangSC-Medium;
+            font-size:18px;
+            font-weight:600;
+        }
+        .edit_information img{
+            position: relative;
+            float: right;
+            width: 25px;
+            margin-top: 7px;
+            margin-right: 10px;
+        }
+        .asset_value{
+            width: 96%;
+            height: 125px;
+            background-color: white;
+            margin: 2%;
+        }
+        .asset_value p{
+            background-color: #6EE7FF;
+            margin: 0px auto;
+            color: white;
+            width: 45px;
+            float: left;
+            border-radius: 1px;
+            margin: 12px;
+            text-align: center;
+            margin-bottom: 0px;
+            font-size: 12px;
+        }
+        .asset_value_middle{
+            top: 5px;
+            float: left;
+            position: relative;
+            width: 100%;
+        }
+        .asset_value_middle span{
+            width: 20%;
+            float: left;
+            font-family: PingFangSC-Regular;
+            font-size: 14px;
+            color:black;
+            text-align: center;
+        }
+        .asset_value_bottom{
+            top: 10px;
+            float: left;
+            position: relative;
+            width: 100%;
+        }
+        .asset_value_bottom span{
+            width: 20%;
+            float: left;
+            font-family: PingFangSC-Regular;
+            font-size: 14px;
+            color: #9B9B9B;
+            text-align: center;
+            overflow: hidden;
+            text-overflow:ellipsis;
+            white-space: nowrap;
+        }
+        .asset_line{
+            width: 80%;
+            height: 1px;
+            background-color: #E5E5E5;
+            margin-top: -9px;
+            margin-left: 9%;
+        }
+        .loadingPage{
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+        }
+
+    </style>
+</head>
+<body>
+<div>
+    <%--<div class="asset_header">--%>
+        <%--<img class="asset_header_img" src="../img/left_arrow.png">--%>
+        <%--<span>返回</span>--%>
+        <%--<div class="asset_header_infor"><p>资产信息</p></div>--%>
+    <%--</div >--%>
+        <header data-am-widget="header" class="am-header">
+            <div class="am-header-left am-header-nav">
+                <a href="#left-link" class="">
+                    <img src="../img/left.png" class="left"><span>返回</span>
+                </a>
+            </div>
+            <p>
+                资产信息
+            </p>
+            <div class="am-header-right am-header-nav">
+                <a href="#right-link" class="">
+                    <%--<span><img src="../img/dian.png" class="right"></span>--%>
+                    <%--<span><img src="../img/dian.png" class="right"></span>--%>
+                    <%--<span><img src="../img/dian.png" class="right"></span>--%>
+                </a>
+            </div>
+        </header>
+    <div class="asset_row" id = "clxx">
+        <div class="asset_name">
+            <p>车辆信息</p>
+            <div class="edit_information"><img id="edit_clxx" src="../img/Combined Shape.png"></div>
+        </div>
+    </div>
+    <div class="asset_row" id = "fcxx">
+        <div class="asset_name">
+            <p>房产信息</p>
+            <div class="edit_information"><img id="edit_fcxx" src="../img/Combined Shape.png"></div>
+        </div>
+    </div>
+    <div class="asset_row" id = "spxx">
+        <div class="asset_name">
+            <p>商铺信息</p>
+            <div class="edit_information"><img id="edit_spxx" src="../img/Combined Shape.png"></div>
+        </div>
+    </div>
+    <div class="asset_row" id = "gjjxx">
+        <div class="asset_name">
+            <p>公积金信息</p>
+            <div class="edit_information"><img  id="edit_gjjxx" src="../img/Combined Shape.png"></div>
+        </div>
+    </div>
+    <div class="asset_row" id = "cbxx">
+        <div class="asset_name">
+            <p>参保信息</p>
+            <div class="edit_information"><img id="edit_cbxx" src="../img/Combined Shape.png"></div>
+        </div>
+    </div>
+    <div class="asset_row" id = "gsxx">
+        <div class="asset_name">
+            <p>公司信息</p>
+            <div class="edit_information"><img id="edit_gsxx" src="../img/Combined Shape.png"></div>
+        </div>
+    </div>
+</div>
+<%--<div class="loadingPage">--%>
+    <%--<i class="am-icon-spinner am-icon-pulse" style="font-size: 5rem;color:#FFC433;left: 0;right: 0;top: 50%;"></i>--%>
+<%--</div>--%>
+<div class="loader">
+    <div class="loader-inner">
+        <div class="loader-line-wrap">
+            <div class="loader-line"></div>
+        </div>
+        <div class="loader-line-wrap">
+            <div class="loader-line"></div>
+        </div>
+        <div class="loader-line-wrap">
+            <div class="loader-line"></div>
+        </div>
+        <div class="loader-line-wrap">
+            <div class="loader-line"></div>
+        </div>
+        <div class="loader-line-wrap">
+            <div class="loader-line"></div>
+        </div>
+    </div>
+</div>
+<script>
+
+   <%--var khid = "<%=session.getAttribute(SessionStorage.KHID)%>";--%>
+//   var khid="11e7-6db8-e83c5ebe-8d42-4f6fa9b0ec38";
+
+   var khid = "<%=session.getAttribute(SessionStorage.KHID)%>";
+//   var khid = "11e7-6db8-e83c5ebe-8d42-4f6fa9b0ec38";
+
+   <%--var khid = "<%=session.getAttribute(SessionStorage.KHID)%>";--%>
+//   var khid = "11e7-6db8-e83c5ebe-8d42-4f6fa9b0ec38";
+
+    if(khid!=null){
+        console.log("khid:"+khid)
+        findAsset();
+        editAsset();
+    }
+
+    function editAsset() {
+        $("#edit_clxx").on("click",function () {
+            window.location.href = "../Assets/addAssets?state=clxx";
+        });
+        $("#edit_fcxx").on("click",function () {
+            window.location.href = "../Assets/addAssets?state=fcxx";
+        });
+        $("#edit_spxx").on("click",function () {
+            window.location.href = "../Assets/addAssets?state=spxx";
+        });
+        $("#edit_gjjxx").on("click",function () {
+            window.location.href = "../Assets/addAssets?state=gjjxx";
+        });
+        $("#edit_cbxx").on("click",function () {
+            window.location.href = "../Assets/addAssets?state=cbxx";
+        });
+        $("#edit_gsxx").on("click",function () {
+            window.location.href = "../Assets/addAssets?state=gsxx";
+        });
+    }
+    function findAsset() {
+        $.ajax({
+            url: "../../rx/clxx/readcar",
+            data: {
+                "khid": khid
+            },
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                if(data.code == 200){
+                    var tlkcl = data.tlkKhClxxEntityList;
+                    var tlkfc = data.tlkKhFcxxEntityList;
+                    var tlksp = data.tlkKhSpxxEntityList;
+                    var tlkgjj = data.tlkKhGjjxxEntityList;
+                    var tlkcb = data.tLkKhCbxxEntityList;
+                    var tlkgs = data.tlkKhGsxxEntityList;
+                    var html = "";
+                    for (var i = 0; i < tlkcl.length; i++) {
+                        if (i == 0) {
+                            html = "<div class='asset_value'>" +
+                                    "<div class='asset_value_top'><p>车辆" + (parseInt(i) + 1) + "</p></div>" +
+                                    "<div class='asset_value_middle'><span>品牌</span><span>价格(万元)</span><span>月供(元)</span><span>时间</span><span>归属地</span></div>" +
+                                    "<div id='"+tlkcl[i].id+"' class='asset_value_bottom'><span>" + tlkcl[i].itemClpp + "</span><span>" + tlkcl[i].itemLcj + "</span><span>" +  tlkcl[i].itemYgje + "</span><span>" + tlkcl[i].itemGcsj + "</span><span>" + tlkcl[i].itemClss + "</span></div>" +
+                                    "</div>"
+                        } else {
+                            html = "<div class='asset_line'></div><div class='asset_value' style='margin-top: 0px;'>" +
+                                    "<div class='asset_value_top'><p>车辆" + (parseInt(i) + 1) + "</p></div>" +
+                                    "<div class='asset_value_middle'><span>品牌</span><span>价格(万元)</span><span>月供(元)</span><span>时间</span><span>归属地</span></div>" +
+                                    "<div id='"+tlkcl[i].id+"' class='asset_value_bottom'><span>" + tlkcl[i].itemClpp + "</span><span>" + tlkcl[i].itemLcj + "</span><span>" + tlkcl[i].itemYgje + "</span><span>" + tlkcl[i].itemGcsj + "</span><span>" + tlkcl[i].itemClss + "</span></div>" +
+                                    "</div>"
+                        }
+
+                        $("#clxx").append(html);
+                    }
+                    for (var i = 0; i < tlkfc.length; i++) {
+                        if (i == 0) {
+                            html = "<div class='asset_value'>" +
+                                    "<div class='asset_value_top'><p>房产" + (parseInt(i) + 1) + "</p></div>" +
+                                    "<div class='asset_value_middle'><span>房产性质</span><span>月供金额(元)</span><span>房屋类型</span><span>总面积(平米)</span><span>市场单价(元)</span></div>" +
+                                    "<div id='"+tlkfc[i].id+"' class='asset_value_bottom'><span>" + tlkfc[i].itemFcxz + "</span><span>" + tlkfc[i].itemYgje + "</span><span>" + tlkfc[i].itemJzlx + "</span><span>" + tlkfc[i].itemJzmj.substr(0,tlkfc[i].itemJzmj.indexOf(".")+3) + "</span><span>" + tlkfc[i].itemScdj + "</span></div>" +
+                                    "</div>";
+                        } else {
+                            html = "<div class='asset_line'></div><div class='asset_value' style='margin-top: 0px;'>" +
+                                    "<div class='asset_value_top'><p>房产" + (parseInt(i) + 1) + "</p></div>" +
+                                    "<div class='asset_value_middle'><span>房产性质</span><span>月供金额(元)</span><span>房屋类型</span><span>总面积(平米)</span><span>市场单价(元)</span></div>" +
+                                    "<div id='"+tlkfc[i].id+"' class='asset_value_bottom'><span>" + tlkfc[i].itemFcxz + "</span><span>" + tlkfc[i].itemYgje + "</span><span>" + tlkfc[i].itemJzlx + "</span><span>" + tlkfc[i].itemJzmj + "</span><span>" + tlkfc[i].itemScdj + "</span></div>" +
+                                    "</div>";
+                        }
+                        $("#fcxx").append(html);
+                    }
+
+                    for (var i = 0; i < tlksp.length; i++) {
+                        if (i == 0) {
+                            html = "<div class='asset_value'>" +
+                                    "<div class='asset_value_top'><p>商铺" + (parseInt(i) + 1) + "</p></div>" +
+                                    "<div class='asset_value_middle'><span>商铺楼层</span><span>商铺性质</span><span>月供金额(元)</span><span>租金收益(元)</span><span>评估价值(万元)</span></div>" +
+                                    "<div id='"+tlksp[i].id+"' class='asset_value_bottom'><span>" + tlksp[i].itemSplc + "</span><span>" + tlksp[i].itemSpxz + "</span><span>" + tlksp[i].itemYgje + "</span><span>" + tlksp[i].itemSpzjsy + "</span><span>" + tlksp[i].itemSppgjz + "</span></div>" +
+                                    "</div>";
+                        } else {
+                            html = "<div class='asset_line'></div><div class='asset_value' style='margin-top: 0px;'>" +
+                                    "<div class='asset_value_top'><p>商铺" + (parseInt(i) + 1) + "</p></div>" +
+                                    "<div class='asset_value_middle'><span>商铺楼层</span><span>商铺性质</span><span>月供金额(元)</span><span>租金收益(元)</span><span>评估价值(万元)</span></div>" +
+                                    "<div id='"+tlksp[i].id+"' class='asset_value_bottom'><span>" + tlksp[i].itemSplc + "</span><span>" + tlksp[i].itemSpxz + "</span><span>" + tlksp[i].itemYgje + "</span><span>" + tlksp[i].itemSpzjsy + "</span><span>" + tlksp[i].itemSppgjz + "</span></div>" +
+                                    "</div>";
+                        }
+                        $("#spxx").append(html);
+                    }
+
+                    for (var i = 0; i < tlkgjj.length; i++) {
+                        if (i == 0) {
+                            html = "<div class='asset_value'>" +
+                                    "<div class='asset_value_top'><p>公积金" + (parseInt(i) + 1) + "</p></div>" +
+                                    "<div class='asset_value_middle'><span>缴费开始时间</span><span>缴费结束时间</span><span>账户状态</span><span>账户余额(元)</span><span>月供金额(万元)</span></div>" +
+                                    "<div id='"+tlkgjj[i].id+"' class='asset_value_bottom'><span>" + tlkgjj[i].itemGjjjckssj + "</span><span>" + tlkgjj[i].itemGjjjcjssj + "</span><span>" + tlkgjj[i].itemZhzt + "</span><span>" + tlkgjj[i].itemZhye + "</span><span>" + tlkgjj[i].itemYjcje + "</span></div>" +
+                                    "</div>";
+                        } else {
+                            html = "<div class='asset_line'></div><div class='asset_value' style='margin-top: 0px;'>" +
+                                    "<div class='asset_value_top'><p>公积金" + (parseInt(i) + 1) + "</p></div>" +
+                                    "<div class='asset_value_middle'><span>缴费开始时间</span><span>缴费结束时间</span><span>账户状态</span><span>账户余额(元)</span><span>月供金额(万元)</span></div>" +
+                                    "<div id='"+tlkgjj[i].id+"' class='asset_value_bottom'><span>" + tlkgjj[i].itemGjjjckssj + "</span><span>" + tlkgjj[i].itemGjjjcjssj + "</span><span>" + tlkgjj[i].itemZhzt + "</span><span>" + tlkgjj[i].itemZhye + "</span><span>" + tlkgjj[i].itemYjcje + "</span></div>" +
+                                    "</div>";
+                        }
+                        $("#gjjxx").append(html);
+                    }
+
+                    for (var i = 0; i < tlkcb.length; i++) {
+                        if (i == 0) {
+                            html = "<div class='asset_value'>" +
+                                    "<div class='asset_value_top'><p>参保" + (parseInt(i) + 1) + "</p></div>" +
+                                    "<div class='asset_value_middle'><span>参保种类</span><span>单位名称</span><span>人员所属区域</span><span>是否退休</span><span>当前状态</span></div>" +
+                                    "<div id='"+tlkcb[i].id+"' class='asset_value_bottom'><span>" + tlkcb[i].itemCbzl + "</span><span>" + tlkcb[i].itemDwmc + "</span><span>" + tlkcb[i].itemRyssqy + "</span><span>" + tlkcb[i].itemSftx + "</span><span>" + tlkcb[i].itemDqzt + "</span></div>" +
+                                    "</div>";
+                        } else {
+                            html = "<div class='asset_line'></div><div class='asset_value' style='margin-top: 0px;'>" +
+                                    "<div class='asset_value_top'><p>参保" + (parseInt(i) + 1) + "</p></div>" +
+                                    "<div class='asset_value_middle'><span>参保种类</span><span>单位名称</span><span>人员所属区域</span><span>是否退休</span><span>当前状态</span></div>" +
+                                    "<div id='"+tlkcb[i].id+"' class='asset_value_bottom'><span>" + tlkcb[i].itemCbzl + "</span><span>" + tlkcb[i].itemDwmc + "</span><span>" + tlkcb[i].itemRyssqy + "</span><span>" + tlkcb[i].itemSftx + "</span><span>" + tlkcb[i].itemDqzt + "</span></div>" +
+                                    "</div>";
+                        }
+
+                        $("#cbxx").append(html);
+                    }
+
+                    for (var i = 0; i < tlkgs.length; i++) {
+                        if (i == 0) {
+                            html = "<div class='asset_value'>" +
+                                    "<div class='asset_value_top'><p>单位" + (parseInt(i) + 1) + "</p></div>" +
+                                    "<div class='asset_value_middle'><span>单位名称</span><span>单位地址</span><span>单位性质</span><span>经营模式</span><span>职位信息</span></div>" +
+                                    "<div id='"+tlkgs[i].id+"' class='asset_value_bottom'><span>" + tlkgs[i].itemDwmc + "</span><span>" + tlkgs[i].itemDwdz + "</span><span>" + tlkgs[i].itemDwxz + "</span><span>" + tlkgs[i].itemJyms + "</span><span>" + tlkgs[i].itemZw + "</span></div>" +
+                                    "</div>";
+                        } else {
+                            html = "<div class='asset_line'></div><div class='asset_value' style='margin-top: 0px;'>" +
+                                    "<div class='asset_value_top'><p>单位" + (parseInt(i) + 1) + "</p></div>" +
+                                    "<div class='asset_value_middle'><span>单位名称</span><span>单位地址</span><span>单位性质</span><span>经营模式</span><span>职位信息</span></div>" +
+                                    "<div id='"+tlkgs[i].id+"' class='asset_value_bottom'><span>" + tlkgs[i].itemDwmc + "</span><span>" + tlkgs[i].itemDwdz + "</span><span>" + tlkgs[i].itemDwxz + "</span><span>" + tlkgs[i].itemJyms + "</span><span>" + tlkgs[i].itemZw + "</span></div>" +
+                                    "</div>";
+                        }
+                        $("#gsxx").append(html);
+                    }
+                    $(".asset_value_bottom").on("click",function (e) {
+                        console.log($(this).attr('id'));
+                        var id = $(this).attr('id');
+                        var state = $(this).parent().parent().attr("id");
+                        console.log(state);
+                        window.location.href = "../Assets/changeAssets?id="+id+"&state="+state;
+                    })
+                }
+                $(".loader").css("display","none");
+            },
+            error: function () {
+                $(".loader").css("display","none");
+            }
+        })
+    }
+</script>
+</body>
+</html>

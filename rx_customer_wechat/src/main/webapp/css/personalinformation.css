@@ -1,0 +1,81 @@
+header{
+    background-color: #F5F5F5!important;
+}
+h1.am-header-title>a{
+    color: #101010!important;
+}
+.am-icon-exchange,.am-icon-save{
+    color: #444444;
+}
+ul{
+    margin: 0 0 0 0;
+}
+li>div{
+    padding-left: 14px;
+    margin: 0 0 0 0;
+    font-size: 14px;
+    font-weight: 100!important;
+    height: 45px;
+    line-height: 45px;
+    vertical-align: middle;
+    color: #8A888A;
+}
+p{
+    margin: 0 0 0 0!important;
+    font-size: 18px;
+    font-weight: 100!important;
+    padding-left: 14px;
+}
+li.am-panel>p{
+    background-color: #EBE8EB;
+    height: 56px;
+    line-height: 56px;
+    vertical-align: middle;
+    color: black;
+}
+li>p{
+    height: 45px;
+    line-height: 45px;
+    vertical-align: middle;
+    color: #8A888A;
+    font-size: 14px;
+}
+li.am-panel{
+    margin-bottom: 9px;
+    border-width: 0;
+}
+body{
+    background-color: #F5F5F5;
+}
+.am-selected.am-dropdown {
+    float: right;
+}
+.am-selected-text,.am-selected-status.am-fl{
+    text-align: right;
+    color: #8A888A;
+}
+div>input{
+    float: right;
+    width: 200px;
+    height: 37.2px;
+    vertical-align: middle;
+    font-size: 1.6rem;
+    font-weight: 400;
+    text-align: right;
+    margin-top: 5px;
+    padding-right: 20px;
+    border: none;
+}
+.am-btn-default{
+    border: none!important;
+    background-color: white!important;
+}
+
+/*黄才志添加的下面两个 样式  header-nav1   header-nav1*/
+.header-nav1 {
+    background-color: rgb(254, 196, 52) !important;
+}
+
+.header-nav1 p {
+    color: white;
+}

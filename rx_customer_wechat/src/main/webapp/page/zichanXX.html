@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>资产信息</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="alternate icon" type="image/png" href="../i/favicon.png">
+    <link rel="stylesheet" href="../css/amazeui.min.css"/>
+    <link rel="stylesheet" href="../css/personalinformation.css">
+    <script src="../js/jquery-3.1.1.min.js"></script>
+    <script src="../js/amazeui.widgets.helper.min.js"></script>
+    <script src="../js/amazeui.min.js"></script>
+    <style>
+        table {
+            width: 98%;
+            margin-left: 1%;
+            margin-right: 1%;
+        }
+
+        table tr {
+            width: 100%;
+        }
+
+        .tr1 td {
+            width: 19%;
+            text-align: center;
+            color: #8A888A;
+            font-size: 14px;
+            height: 30px;
+            line-height: 30px;
+            vertical-align: middle;
+        }
+
+        .am-modal-dialog {
+            width: 85% !important;
+            border-radius: 10px;
+        }
+
+        .tr2 td {
+            width: 19%;
+            color: #0D000D;
+            font-size: 12px;
+            height: 30px;
+            line-height: 30px;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .car {
+            width: 100%;
+
+        }
+
+        .car li {
+            list-style: none;
+        }
+
+        .car_in {
+            float: right;
+            width: 70%;
+        }
+
+        .car_s {
+            float: left;
+            margin-left: -30px;
+        }
+        .
+    </style>
+
+</head>
+<body>
+<header data-am-widget="header"
+        class="am-header am-header-default" style="text-align: center">
+    <div class="am-header-left am-header-nav">
+        <a href="#left-link" class="">
+            <i class="am-header-icon am-icon-exchange"></i>
+        </a>
+    </div>
+    <p>
+        资产信息
+    </p>
+    <div class="am-header-right am-header-nav">
+        <a href="#right-link" class="">
+            <i class="am-header-icon am-icon-save"></i>
+        </a>
+    </div>
+</header>
+
+<ul class="am-list admin-sidebar-list" id="collapase-nav-1">
+
+    <li class="am-panel">
+        <p data-am-collapse="{parent: '#collapase-nav-1', target: '#user-nav'}">
+            车辆信息<i class="am-icon-angle-right am-fr am-margin-right"></i>
+        </p>
+        <ul class="am-list am-collapse admin-sidebar-sub" id="user-nav">
+            <li>
+                <table class="tt">
+                    <tr class="tr1">
+                        <td>车辆品牌</td>
+                        <td>裸车价格</td>
+                        <td>月供金额</td>
+                        <td>购车时间</td>
+                        <td>车辆归属地</td>
+                    </tr>
+                    <tr class="tr2">
+                        <td>MG6</td>
+                        <td>20万</td>
+                        <td>2000</td>
+                        <td>宝马</td>
+                        <td>成都</td>
+                    </tr>
+                </table>
+            </li>
+            <li>
+                <p>
+                    添加车辆：
+                    <i class="am-margin-right am-fr am-icon-plus-square" id="doc-confirm-toggle"></i>
+                </p>
+            </li>
+        </ul>
+    </li>
+
+    <li class="am-panel">
+        <p data-am-collapse="{parent: '#collapase-nav-1', target: '#company-nav'}">
+            征信信息
+            <i class="am-icon-angle-right am-fr am-margin-right"></i>
+        </p>
+        <ul class="am-list am-collapse admin-sidebar-sub" id="company-nav">
+            <li>
+                <p>
+                    征信信息：
+                    <select data-am-selected>
+                        <option value="a">白户</option>
+                        <option value="b">黑户</option>
+                        <option value="o">不良记录</option>
+                    </select>
+                </p>
+            </li>
+            <li>
+                <p>
+                    有无征信逾期：
+                    <select data-am-selected>
+                        <option value="a">有</option>
+                        <option value="b">无</option>
+                    </select>
+                </p>
+            </li>
+            <li>
+                <div>
+                    近三月逾期笔数：
+                    <input type="text">
+                </div>
+            </li>
+        </ul>
+    </li>
+
+    <li class="am-panel">
+        <p data-am-collapse="{parent: '#collapase-nav-1', target: '#role-nav'}">
+            其他信息 <i class="am-icon-angle-right am-fr am-margin-right"></i>
+        </p>
+
+    </li>
+
+</ul>
+<div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">添加车辆</div>
+        <div class="am-modal-bd">
+            <ul class="car" id="add_car">
+                <li>
+                    <div>
+                        <span class="car_s">车辆品牌:</span>
+                        <input type="text" class="car_in">
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <span class="car_s">裸车价格:</span>
+                        <input type="text" class="car_in">
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <span class="car_s"> 月供金额：</span>
+                        <input type="text" class="car_in">
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <span class="car_s">购车时间：</span>
+                        <input type="text" class="car_in">
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <span class="car_s"> 车辆归属地：</span>
+                        <input type="text" class="car_in">
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    $().collapse('toggle');
+    $('p').click(function () {
+        if ($(this).next().length > 0) {
+            if ($(this).children().hasClass('am-icon-angle-down')) {
+                $(this).children().removeClass('am-icon-angle-down');
+                $(this).children().addClass('am-icon-angle-right');
+            } else {
+                $(this).children().removeClass('am-icon-angle-right');
+                $(this).children().addClass('am-icon-angle-down');
+                $(this).parent().siblings().children('p').children().removeClass('am-icon-angle-down')
+                $(this).parent().siblings().children('p').children().addClass('am-icon-angle-right')
+            }
+        }
+    })
+    $(function () {
+        $('#doc-confirm-toggle').on('click', function () {
+            $('#my-confirm').modal({
+                relatedTarget: this,
+                onConfirm: function (options) {
+                    var $link = $(this.relatedTarget).prev('a');
+                    var msg = $link.length ? '你要删除的链接 ID 为 ' + $link.data('id') :
+                        '确定了，但不知道要整哪样';
+                    alert(msg);
+                },
+                // closeOnConfirm: false,
+                onCancel: function () {
+
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

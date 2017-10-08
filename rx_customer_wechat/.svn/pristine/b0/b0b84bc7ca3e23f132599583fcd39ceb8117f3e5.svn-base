@@ -1,0 +1,106 @@
+package com.rx.webApplication.controller;
+
+import com.cxt.wechat.entity.WechatUser;
+import com.google.gson.Gson;
+import com.rx.webApplication.SessionStorage;
+import com.rx.webApplication.dao.Impl.TlkKhjcxxEntityDaoImpl;
+import com.rx.webApplication.dao.TlkKhjcxxEntityDao;
+import com.rx.webApplication.entities.TLkKhjcxxEntity;
+import com.rx.webApplication.util.ResponseUtil;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by 王玉粮 on 2017/7/26.
+ */
+@Controller
+@RequestMapping("product")
+public class ProductController {
+
+
+    Gson gson = new Gson();
+
+    @RequestMapping("reservation")
+    public String reservation(){
+        return "productReservation";
+    }
+
+    /**
+     * 根据openid查询所有的用户
+     * @param request
+     * @param response
+     * @param session
+     */
+    @RequestMapping("querykhxx")
+    public void queryKhxxByOpenid(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+        Map<String,Object> map = new HashMap<>();
+        WechatUser wechatUser = (WechatUser) session.getAttribute(SessionStorage.WECHATUSER);//取得用户的WechatUser
+        if(wechatUser==null){
+            System.out.println("未取得用户的WechatUser");
+            map.put("msg","未取得用户的WechatUser");
+            map.put("code","500");
+            return;
+        }
+        String openid = wechatUser.getOpenid();//取得用户openid
+//        String openid = "oyaYgt4WnzPfhW5aSA8g87ktBvfI";
+        if(openid == null){
+            System.out.println("未取得用户的openid");
+            map.put("msg","未取得用户的openid");
+            map.put("code","500");
+            return;
+        }
+        TlkKhjcxxEntityDao tlkKhjcxxEntityDao = new TlkKhjcxxEntityDaoImpl();
+        TLkKhjcxxEntity tLkKhjcxxEntity = tlkKhjcxxEntityDao.findByOpenId(openid);//通过openid获取客户基础信息
+
+        if(tLkKhjcxxEntity == null){
+            System.out.println("未取得用户基础信息");
+            map.put("msg","未取得用户基础信息");
+            map.put("code","500");
+            return;
+        }
+        map.put("code","200");
+        map.put("tLkKhjcxxEntity",tLkKhjcxxEntity);
+        ResponseUtil.response(response,gson.toJson(map));
+    }
+
+
+    @RequestMapping("reservedProduct")
+    public void  reservedProduct(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+        Map<String,Object> map = new HashMap<>();
+        TlkKhjcxxEntityDao tlkKhjcxxEntityDao = new TlkKhjcxxEntityDaoImpl();
+        List list = new ArrayList();
+        String username = request.getParameter("username");
+        String phone = request.getParameter("phone");
+        String state = request.getParameter("state");
+        if(state.equals("1")){
+            System.out.println("执行更新操作");
+            tlkKhjcxxEntityDao.UpdateNameByPhone(username,phone);
+        }
+        String ssr = tlkKhjcxxEntityDao.findSSRIdByPhone(phone);
+        if (ssr == null){
+            list = tlkKhjcxxEntityDao.findAllUserOpenidByRoleName("电销中心主管");
+            for(int i = 0;i < list.size();i ++){
+                String dirOpenid = (String) list.get(i);
+                System.out.println("发送消息给电销中心主管");
+            }
+        }else {
+            String openid = tlkKhjcxxEntityDao.findSSROpenidById(ssr);
+            System.out.println("发送消息给所属人");
+            list = tlkKhjcxxEntityDao.findAllUserOpenidByRoleName("电销中心主管");
+            for(int i = 0;i < list.size();i ++){
+                String dirOpenid = (String) list.get(i);
+                System.out.println("发送消息给电销中心主管");
+            }
+        }
+        map.put("code","200");
+        ResponseUtil.response(response,gson.toJson(map));
+    }
+}
