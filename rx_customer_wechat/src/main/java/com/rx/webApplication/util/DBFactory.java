@@ -32,8 +32,8 @@ public class DBFactory implements ServletContextListener {
     private static String username2= null;
     private static String password2 = null;
     //微信配置
-    public static final String APPID = "wxb5e53b1e6a25c317";
-    public static final String  SECRITE = "69226afef8d9c92c6b1d3092baf1e1e4";
+    public static final String APPID = "";
+    public static final String  SECRITE = "";
 
     private static Connection conn = null;
     private static PreparedStatement pstmt = null;
